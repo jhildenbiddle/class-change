@@ -1,0 +1,7 @@
+# Folders
+node_modules
+
+# OS
+._*
+.cache
+.DS_Store

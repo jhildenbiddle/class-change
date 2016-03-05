@@ -1,0 +1,30 @@
+{
+  "name": "class-change",
+  "version": "0.0.1",
+  "description": "A collection of helpers for changing class names and delegating class change events",
+  "author": "John Hildenbiddle",
+  "license": "MIT",
+  "homepage": "https://github.com/jhildenbiddle/class-change#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://jhildenbiddle@github.com/jhildenbiddle/class-change.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jhildenbiddle/class-change/issues"
+  },
+  "keywords": [
+    "class",
+    "classList",
+    "CSS",
+    "delegate"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "uglify-js": "^2.6.2"
+  },
+  "main": "dist/class-change.js",
+  "scripts": {
+    "test"  : "echo \"Error: no test specified\" && exit 1",
+    "uglify": "uglifyjs dist/class-change.js -m -c -o dist/class-change.min.js"
+  }
+}
