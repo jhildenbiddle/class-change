@@ -9,9 +9,12 @@
     <style>
         body {
             background: #e7e7e7;
+            font-family: sans-serif;
+            text-align: center;
         }
 
         section {
+            display: block;
             overflow: auto;
             width: 600px;
             margin: 25px auto;
@@ -46,7 +49,9 @@
 <body>
 
     <main>
+        <h1>classChange.js</h1>
         <section class="delegate">
+            <h2>Delegated Events</h2>
             <div class="add">
                 <button>Delegate: Add</button>
             </div>
@@ -58,6 +63,7 @@
             </div>
         </section>
         <section class="methods">
+            <h2>Direct</h2>
             <div class="add">
                 <button>Method: Add</button>
             </div>
@@ -66,6 +72,24 @@
             </div>
             <div class="toggle active round">
                 <button>Method: Toggle</button>
+            </div>
+        </section>
+        <section class="args">
+            <h2>Malformed Arguments</h2>
+            <div class="array">
+                <button>Toggle (Array)</button>
+            </div>
+            <div class="string active round">
+                <button>Toggle (String)</button>
+            </div>
+        </section>
+        <section class="changefn">
+            <h2>Change Function</h2>
+            <div class="elm">
+                <button>Toggle (elm)</button>
+            </div>
+            <div class="index active round">
+                <button>Toggle (index)</button>
             </div>
         </section>
     </main>
@@ -84,34 +108,54 @@
             toggle: document.querySelector('.methods .toggle button').addEventListener('click', function(e) {
                 classChange.toggle('.methods .toggle', 'active round');
             }),
-            // Delegated
+            // Delegate Events
             delegate: {
                 add: classChange.delegate({
                     matches: '.delegate .add button',
                     add    : 'active round',
                     change : '.delegate .add'
-                    // change : function(elm, i) {
-                    //     return elm.closest('div');
-                    // }
                 }),
                 remove: classChange.delegate({
                     matches: '.delegate .remove button',
                     remove : 'active round',
                     change : '.delegate .remove'
-                    // change : function(elm, i) {
-                    //     return elm.closest('div');
-                    // }
                 }),
                 toggle: classChange.delegate({
                     matches: '.delegate .toggle button',
                     toggle : 'active round',
                     change : '.delegate .toggle'
-                    // change : function(elm, i) {
-                    //     return elm.closest('div');
-                    // }
                 }),
+            },
+            // Malformed Arguments
+            args: {
+                array: classChange.delegate({
+                    matches: '.args .array button',
+                    toggle : '   active   round   ',
+                    change : '.args .array'
+                }),
+                string: classChange.delegate({
+                    matches: '.args .string button',
+                    toggle : ['   active   ', '   round   '],
+                    change : '.args .string'
+                })
+            },
+            // Change Function
+            changefn: {
+                elm: classChange.delegate({
+                    matches: '.changefn button',
+                    toggle : 'active',
+                    change : function(elm, i) {
+                        return elm.parentNode;
+                    }
+                }),
+                index: classChange.delegate({
+                    matches: '.changefn button',
+                    toggle : 'round',
+                    change : function(elm, i) {
+                        return document.querySelectorAll('.changefn div')[i];
+                    }
+                })
             }
-
         }
     </script>
 
