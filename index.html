@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>classChange.js</title>
+    <style>
+        body {
+            background: #e7e7e7;
+        }
+
+        section {
+            overflow: auto;
+            width: 600px;
+            margin: 25px auto;
+        }
+
+        section > div {
+            float: left;
+            margin: 0 25px;
+            text-align: center;
+        }
+
+        section > div:before {
+            content: '';
+            display: block;
+            height: 150px;
+            width: 150px;
+            margin-bottom: 10px;
+            background: #999;
+            transition: all 0.5s;
+        }
+
+        section > div.active:before {
+            background: red;
+        }
+
+        section > div.round:before {
+            border-radius: 50%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main>
+        <section class="delegate">
+            <div class="add">
+                <button>Delegate: Add</button>
+            </div>
+            <div class="remove active round">
+                <button>Delegate: Remove</button>
+            </div>
+            <div class="toggle active round">
+                <button>Delegate: Toggle</button>
+            </div>
+        </section>
+        <section class="methods">
+            <div class="add">
+                <button>Method: Add</button>
+            </div>
+            <div class="remove active round">
+                <button>Method: Remove</button>
+            </div>
+            <div class="toggle active round">
+                <button>Method: Toggle</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script src="dist/class-change.js"></script>
+    <script>
+        var demos = {
+            // Methods
+            add: document.querySelector('.methods .add button').addEventListener('click', function(e) {
+                classChange.add('.methods .add', 'active round');
+            }),
+            remove: document.querySelector('.methods .remove button').addEventListener('click', function(e) {
+                classChange.remove('.methods .remove', 'active round');
+            }),
+            toggle: document.querySelector('.methods .toggle button').addEventListener('click', function(e) {
+                classChange.toggle('.methods .toggle', 'active round');
+            }),
+            // Delegated
+            delegate: {
+                add: classChange.delegate({
+                    matches: '.delegate .add button',
+                    add    : 'active round',
+                    change : '.delegate .add'
+                    // change : function(elm, i) {
+                    //     return elm.closest('div');
+                    // }
+                }),
+                remove: classChange.delegate({
+                    matches: '.delegate .remove button',
+                    remove : 'active round',
+                    change : '.delegate .remove'
+                    // change : function(elm, i) {
+                    //     return elm.closest('div');
+                    // }
+                }),
+                toggle: classChange.delegate({
+                    matches: '.delegate .toggle button',
+                    toggle : 'active round',
+                    change : '.delegate .toggle'
+                    // change : function(elm, i) {
+                    //     return elm.closest('div');
+                    // }
+                }),
+            }
+
+        }
+    </script>
+
+</body>
+</html>
