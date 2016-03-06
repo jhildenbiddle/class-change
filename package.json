@@ -1,8 +1,8 @@
 {
   "name": "class-change",
   "version": "0.0.2",
-  "description": "A collection of helpers for changing class names and delegating class change events",
-  "author": "John Hildenbiddle",
+  "description": "Simplified CSS class change event delegation and multi-class add, remove and toggle methods",
+  "author": "John Hildenbiddle <john@hildenbiddle.com> (http://hildenbiddle.com)",
   "license": "MIT",
   "homepage": "https://github.com/jhildenbiddle/class-change#readme",
   "repository": {
@@ -27,8 +27,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "mkdir -p dist/ && browserify index.js -s classList > dist/class-change.js",
-    "build:min": "mkdir -p dist/ && browserify -g uglifyify index.js -s classList > dist/class-change.min.js",
+    "build:dev": "browserify index.js -s classChange > dist/class-change.js",
+    "build:min": "browserify -g uglifyify index.js -s classChange > dist/class-change.min.js",
+    "prebuild": "mkdir -p dist/",
     "build": "npm run build:dev && npm run build:min"
   }
 }
