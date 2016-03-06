@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A collection of helpers for changing class names and delegating class change events",
   "author": "John Hildenbiddle",
   "license": "MIT",
