@@ -13,6 +13,7 @@
     "url": "https://github.com/jhildenbiddle/class-change/issues"
   },
   "keywords": [
+    "change",
     "class",
     "classList",
     "CSS",
@@ -20,11 +21,14 @@
   ],
   "dependencies": {},
   "devDependencies": {
-    "uglify-js": "^2.6.2"
+    "browserify": "^13.0.0",
+    "uglifyify": "^3.0.1"
   },
-  "main": "dist/class-change.js",
+  "main": "index.js",
   "scripts": {
-    "test"  : "echo \"Error: no test specified\" && exit 1",
-    "uglify": "uglifyjs dist/class-change.js -m -c -o dist/class-change.min.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "mkdir -p dist/ && browserify index.js -s classList > dist/class-change.js",
+    "build:min": "mkdir -p dist/ && browserify -g uglifyify index.js -s classList > dist/class-change.min.js",
+    "build": "npm run build:dev && npm run build:min"
   }
 }
