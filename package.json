@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Simplified CSS class change event delegation and multi-class add, remove and toggle methods",
   "author": "John Hildenbiddle <john@hildenbiddle.com> (http://hildenbiddle.com)",
   "license": "MIT",
