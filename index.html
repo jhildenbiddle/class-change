@@ -56,7 +56,7 @@
     <main>
         <h1>classChange.js</h1>
         <p>
-            <a href="#" data-method="destroy">Destroy all delegate() event listeners</a>
+            <a href="#" data-method="remove">Remove delegated event listeners</a>
         </p>
         <section class="methods">
             <h2>Methods</h2>
@@ -116,8 +116,8 @@
             classChange.toggle('.methods .toggle', 'active round');
         });
 
-        // Delegated Events (Storing references in array for destroyDelegated() function)
-        var demoDelegatedEvents = [
+        // Delegated Events (Storing references in array for remove method)
+        var demoDelegated = [
             // Add
             classChange.delegate({
                 matches: '.delegate .add button',
@@ -139,7 +139,7 @@
         ];
 
         // Malformed Arguments
-        var demoMalformedArguments = [
+        var demoArguments = [
             // Array
             classChange.delegate({
                 matches: '.args .array button',
@@ -172,19 +172,19 @@
             })
         ];
 
-        // Add event listeners for destroy and trigger buttons
-        document.querySelector('a[data-method="destroy"]').addEventListener('click', function(e) {
+        // Add event listeners for remove method demo
+        document.querySelector('a[data-method="remove"]').addEventListener('click', function(e) {
             e.preventDefault();
 
             var count  = 0;
-            var events = [].concat(demoDelegatedEvents, demoMalformedArguments, demoChangeFn);
+            var events = [].concat(demoDelegated, demoArguments, demoChangeFn);
 
             for (var i = 0; i < events.length; i++) {
-                events[i].destroy();
+                events[i].remove();
                 count++;
             }
 
-            console.log('Destroyed ' + count + ' class-change event listeners')
+            console.log('Removed ' + count + ' class-change event listeners')
         });
     </script>
 

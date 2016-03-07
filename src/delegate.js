@@ -113,7 +113,7 @@ module.exports = function(options) {
     // -------------------------------------------------------------------------
     var ctx = {
         listeners: [],
-        destroy  : function destroy() {
+        remove: function destroy() {
             for (var i = 0; i < this.listeners.length; i++) {
                 var listener = this.listeners[i];
 
