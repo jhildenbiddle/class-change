@@ -3,16 +3,10 @@ This small (less than 1.5k minified+gzip), dependency-free micro-library provide
 
 - A consistent interface for manipulating CSS class names in legacy (IE9+) and modern browsers.
 - Simplified CSS class change event delegation.
-
-
 - The ability to specify multiple class names as arrays or a space-separated strings.
 - The ability to `require` a single object with all methods.
 - The ability to `require` individual methods as separate modules (for including in other libraries as needed).
 - The ability replace or work alongside classList polyfills.
-
-
-
-
 
 ## Why?
 
@@ -24,11 +18,7 @@ Manipulating CSS class names is a common front-end development practice. Modern 
 
 - [Polyfills](https://github.com/eligrey/classList.js/) are available that provide a consistent classList implementation across all browsers, but these polyfills lack the ability to apply class changes to multiple elements with a single call or specify classes as arrays and space-separated strings because these features are not part of the official classList specification.
 
-
-
 - Neither classList polyfills nor native classList methods help simplify the process of delegating class change events. Given the frequent need to manipulate CSS class names in web applications, reducing the amount of repetitive code required to handle these events can reduce code bloat and enforce best practices.
-
-
 
 ## Installation
 
@@ -45,8 +35,6 @@ git clone https://github.com/jhildenbiddle/class-change.git
 ```
 
 [Download](https://github.com/jhildenbiddle/class-change/archive/master.zip) the latest source code in zip format.
-
-
 
 ## Methods
 
@@ -72,7 +60,7 @@ git clone https://github.com/jhildenbiddle/class-change.git
   - `options.remove`: CSS class name(s) to remove from the `options.change` element(s).
   - `options.toggle`: CSS class name(s) to toggle on the `options.change` element(s).
   - `options.change`: CSS selector, Node, Node List or Function representing the element(s) to apply the CSS class change to.
-    - When omitted, class name changes will be applied to the event target element. 
+    - When omitted, class name changes will be applied to the event target element.
     - When a CSS selector, Node or Node List is provided, class names changes will be applied to these elements.
     - When Function is provided, the function will be called and is expected to return a CSS selector, Node or Node List on which class names changes will be applied. The following arguments are passed to the function:
       - `elm`: The element associated with the event. For example, an element that was clicked.
@@ -84,9 +72,6 @@ When the `classList.delegate()` method is called, the following methods are retu
 
 - **remove()**
   Removes all event listeners previously registered with `classList.delegate()` method.
-
-
-
 
 ## Examples
 
@@ -120,8 +105,6 @@ classChange.add(document.querySelectorAll('div'), ['myclass1','myclass2']);
 classChange.remove(document.querySelectorAll('div'), ['myclass1','myclass2']);
 classChange.toggle(document.querySelectorAll('div'), ['myclass1','myclass2']);
 ```
-
-
 
 ### Basic Accordion
 
@@ -168,8 +151,6 @@ var accordionListener = classChange.delegate({
   }
 });
 ```
-
-
 
 ### Basic Tabbed Content
 
@@ -246,8 +227,6 @@ var setActiveTabListener = classChange.delegate({
 });
 ```
 
-
-
 ## License
 
 **The MIT License (MIT)**
@@ -259,4 +238,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
