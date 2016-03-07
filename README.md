@@ -68,10 +68,10 @@ git clone https://github.com/jhildenbiddle/class-change.git
 
 ### Delegated Event Methods
 
-When the `classList.delegate()` method is called, the following methods are returned:
+When the `classChange.delegate()` method is called, the following methods are returned:
 
 - **remove()**
-  Removes all event listeners previously registered with `classList.delegate()` method.
+  Removes all event listeners previously registered with `classChange.delegate()` method.
 
 ## Examples
 
