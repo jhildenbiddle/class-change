@@ -7,7 +7,9 @@ module.exports = function(elms, classNames) {
     function removeClassNames(elm) {
         // Native
         if (elm.classList) {
-            elm.classList.remove.apply(elm.classList, classNames);
+            classNames.forEach(function(className) {
+                elm.classList.remove(className);
+            });
         }
         // Legacy
         else {

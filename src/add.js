@@ -7,7 +7,9 @@ module.exports = function(elms, classNames) {
     function addClassNames(elm) {
         // Native
         if (elm.classList) {
-            elm.classList.add.apply(elm.classList, classNames);
+            classNames.forEach(function(className) {
+                elm.classList.add(className);
+            });
         }
         // Legacy
         else {
