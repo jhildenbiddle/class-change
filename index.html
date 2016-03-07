@@ -33,7 +33,7 @@
             width: 150px;
             margin-bottom: 10px;
             background: #999;
-            transition: all 0.5s;
+            transition: all 0.25s;
         }
 
         section > div.active:before {
@@ -50,6 +50,18 @@
 
     <main>
         <h1>classChange.js</h1>
+        <section class="methods">
+            <h2>Methods</h2>
+            <div class="add">
+                <button>Method: Add</button>
+            </div>
+            <div class="remove active round">
+                <button>Method: Remove</button>
+            </div>
+            <div class="toggle active round">
+                <button>Method: Toggle</button>
+            </div>
+        </section>
         <section class="delegate">
             <h2>Delegated Events</h2>
             <div class="add">
@@ -60,18 +72,6 @@
             </div>
             <div class="toggle active round">
                 <button>Delegate: Toggle</button>
-            </div>
-        </section>
-        <section class="methods">
-            <h2>Direct</h2>
-            <div class="add">
-                <button>Method: Add</button>
-            </div>
-            <div class="remove active round">
-                <button>Method: Remove</button>
-            </div>
-            <div class="toggle active round">
-                <button>Method: Toggle</button>
             </div>
         </section>
         <section class="args">
@@ -99,15 +99,17 @@
     <script>
         var demos = {
             // Methods
-            add: document.querySelector('.methods .add button').addEventListener('click', function(e) {
-                classChange.add('.methods .add', 'active round');
-            }),
-            remove: document.querySelector('.methods .remove button').addEventListener('click', function(e) {
-                classChange.remove('.methods .remove', 'active round');
-            }),
-            toggle: document.querySelector('.methods .toggle button').addEventListener('click', function(e) {
-                classChange.toggle('.methods .toggle', 'active round');
-            }),
+            methods: {
+                add: document.querySelector('.methods .add button').addEventListener('click', function(e) {
+                    classChange.add('.methods .add', 'active round');
+                }),
+                remove: document.querySelector('.methods .remove button').addEventListener('click', function(e) {
+                    classChange.remove('.methods .remove', 'active round');
+                }),
+                toggle: document.querySelector('.methods .toggle button').addEventListener('click', function(e) {
+                    classChange.toggle('.methods .toggle', 'active round');
+                })
+            },
             // Delegate Events
             delegate: {
                 add: classChange.delegate({
