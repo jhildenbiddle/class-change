@@ -3,22 +3,22 @@ This small (less than 1.5k minified+gzip), dependency-free micro-library provide
 
 - A consistent interface for manipulating CSS class names in legacy (IE9+) and modern browsers.
 - Simplified CSS class change event delegation.
-- The ability to specify multiple class names as arrays or a space-separated strings.
-- The ability to `require` a single object with all methods.
-- The ability to `require` individual methods as separate modules (for including in other libraries as needed).
+- The ability to specify multiple class names as arrays or space-separated strings.
+- The ability to `require` all methods as a single object.
+- The ability to `require` individual methods as needed (for including with other libraries).
 - The ability replace or work alongside classList polyfills.
 
 ## Why?
 
-Manipulating CSS class names is a common front-end development practice. Modern browsers that support [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) methods provide a consistent interface for handling class name changes, but some browsers lack classList support while others suffer from incomplete implementations. Even with modern classList support, the repetitive nature of delegating multiple CSS class change events can quickly lead to code bloat.
+Manipulating CSS class names is a common front-end development practice. Modern browsers that support [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) methods provide a consistent interface for handling class name changes, but some browsers suffer from incomplete implementations or lack support entirely. Even with modern classList support, the repetitive nature of the code required to delegate class change events can lead to unnecessary code bloat.
 
 - Internet Explore 9 does not support [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) methods.
 
-- Internet Explorer 10 and 11 (as well as older versions of Chrome, Firefox and Safari) provide limited classList support that suffer from [known issues](http://caniuse.com/#feat=classlist) such as the inability to add, remove or toggle multiple class names in a single call.
+- Internet Explorer 10 and 11 (as well as older versions of Chrome, Firefox and Safari) provide limited classList support that suffers from [known issues](http://caniuse.com/#feat=classlist) such as the inability to add, remove or toggle multiple class as described in the official classList specification.
 
-- [Polyfills](https://github.com/eligrey/classList.js/) are available that provide a consistent classList implementation across all browsers, but these polyfills lack the ability to apply class changes to multiple elements with a single call or specify classes as arrays and space-separated strings because these features are not part of the official classList specification.
+- [Polyfills](https://github.com/eligrey/classList.js/) are available that provide a consistent classList implementation across browsers, but these polyfills lack the ability to apply changes to multiple elements with a single method call or specify classes as arrays and space-separated strings because these features are not part of the official classList specification.
 
-- Neither classList polyfills nor native classList methods help simplify the process of delegating class change events. Given the frequent need to manipulate CSS class names in web applications, reducing the amount of repetitive code required to handle these events can reduce code bloat and enforce best practices.
+- Neither polyfills nor native classList methods help address the repetitive nature of the code required to delegate class change events. Given the frequent need to manipulate class names in web applications, reducing the amount of code required to handle these events can reduce code bloat and enforce best practices.
 
 ## Installation
 
@@ -39,30 +39,30 @@ git clone https://github.com/jhildenbiddle/class-change.git
 ## Methods
 
 - **add(*elements*, *classNames*)**
-  Adds one or more CSS classes from the specified element(s). Returns `elements`.
+  Adds class name(s) to the specified element(s). Returns `elements`.
   - `elements`: CSS selector, Node or Node List
   - `classNames`: Space-separated string or Array of class names
 - **remove(*elements*, *classNames*)**
-  Removes  one or more CSS classes from the specified element(s). Returns `elements`.
+  Removes class name(s) from the specified element(s). Returns `elements`.
   - `elements`: CSS selector, Node or Node List
   - `classNames`: Space-separated string or Array of class names
 - **toggle(*elements*, *classNames*, *forceTrueFalse*)**
-  Adds or removes one or more CSS classes from the specified element(s). Returns `elements`.
+  Adds or removes class name(s) from the specified element(s). Returns `elements`.
   - `elements`: CSS selector, Node or Node List
   - `classNames`: Space-separated string or Array of class names
   - `forceTrueFalse` (optional): Boolean or conditional statement that will determine if CSS classes are added (`true`) or removed (`false`).
 - **delegate(*options*)**
-  Registers new event listener(s) based on the *options* provided. Returns an object containing listener data and a `remove()` method for removing the associated event listener(s). Options are as follows:
+  Registers new event listener(s) based on the *options* provided. Returns an object containing a `remove()` method for removing the associated event listener(s). Options are as follows:
   - `options.target`:  The element on which the event listener will be registered. Accepts a CSS selector or Node (default: `document.body`).
   - `options.event`: A string representing the event type to listen for (default: `"click"`).
-  - `options.matches`: CSS selector that matches the intended event target(s).
+  - `options.matches`: CSS selector that matches the intended event target(s). Note that if a CSS selector is used, the selector must be relative to the `options.target` element.
   - `options.add`: CSS class name(s) to add to the `options.change` element(s).
   - `options.remove`: CSS class name(s) to remove from the `options.change` element(s).
   - `options.toggle`: CSS class name(s) to toggle on the `options.change` element(s).
   - `options.change`: CSS selector, Node, Node List or Function representing the element(s) to apply the CSS class change to.
-    - When omitted, class name changes will be applied to the event target element.
-    - When a CSS selector, Node or Node List is provided, class names changes will be applied to these elements.
-    - When Function is provided, the function will be called and is expected to return a CSS selector, Node or Node List on which class names changes will be applied. The following arguments are passed to the function:
+    - When omitted, class changes will be applied to the event target element.
+    - When a CSS selector, Node or Node List is provided, class changes will be applied to these elements.
+    - When Function is provided, the function will be called and is expected to return a CSS selector, Node or Node List on which class changes will be applied. The following arguments are passed to the function:
       - `elm`: The element associated with the event. For example, an element that was clicked.
       - `index`: The index of `elm` in the `options.matches` collection. For example, if the `options.matches` CSS selector matches three elements and the first of those three elements is clicked, the index passed to the `options.change` function will be `0`.
 
@@ -77,7 +77,7 @@ When the `classList.delegate()` method is called, the following methods are retu
 
 ### Add, Remove and Toggle
 
-These example demonstrate programatically applying class changes using a various methods of specifying elements and class names.
+These example demonstrates programmatically applying class changes using various methods of specifying elements and class names.
 
 **HTML**
 
@@ -110,7 +110,7 @@ classChange.toggle(document.querySelectorAll('div'), ['myclass1','myclass2']);
 
 **Demo:** http://codepen.io/jhildenbiddle/pen/xVZEoB
 
-This example demonstrates using an `options.change` function to toggle a class change to the clicked element's parent node. This is done using the `elm` argument that is passed to a `options.change` function.
+This example demonstrates using an `options.change` function to toggle a class change on the clicked element's parent node. This is done using the `elm` argument that is passed to the `options.change` function.
 
 **HTML**
 
@@ -156,9 +156,9 @@ var accordionListener = classChange.delegate({
 
 **Demo:** http://codepen.io/jhildenbiddle/pen/rexWMP
 
-This example demonstrates delegating multiple events and applying class changes using the `index` argument that is passed to a `options.change` function.
+This example demonstrates delegating multiple events and applying class changes using the `index` argument that is passed to the `options.change` function.
 
-The `.tab-list` element contains three `<a>` elements. An event listener is created that listens for `"click"` events on these three elements. When one of these links is clicked, the index of the element (0, 1 or 2) is passed to the `options.change` function which is then used find the first, second or third `.tab-list li` and `.tab-content li` elements. These elements are then returned from the `options.change` function so class changes can be applied. The CSS rules then determines the presentation and visibility of the tabbed content based on "active" class name.
+The `.tab-list` element contains three `<a>` elements. An event listener is created that listens for `"click"` events on these three elements. When one of these links is clicked, the index of the element (0, 1 or 2) is passed to the `options.change` function. This index is used to find the first, second or third `.tab-list li` and `.tab-content li` elements. These elements are then returned from the `options.change` function so class changes can be applied. The CSS rules then determines the presentation and visibility of the tabbed content based on "active" class name.
 
 **HTML**
 
