@@ -13,12 +13,14 @@
     "url": "https://github.com/jhildenbiddle/class-change/issues"
   },
   "keywords": [
+    "css",
     "change",
     "class",
     "classChange",
     "classList",
-    "CSS",
-    "delegate"
+    "delegate",
+    "event",
+    "polyfill"
   ],
   "dependencies": {},
   "devDependencies": {
