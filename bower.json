@@ -27,10 +27,7 @@
   "ignore": [
     "**/.*",
     "bower_components",
-    "demo",
     "node_modules",
-    "package.json",
-    "src",
     "test",
     "tests"
   ]
