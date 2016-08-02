@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "A small, dependency-free micro-library for manipulating CSS class names and generating class change event listeners.",
   "author": "John Hildenbiddle (http://hildenbiddle.com)",
   "license": "MIT",
