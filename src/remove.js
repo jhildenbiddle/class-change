@@ -1,35 +1,48 @@
+// Modules
+// =============================================================================
+var util = require('./util');
+
 // Exports
 // =============================================================================
-module.exports = function(elms, classNames) {
-    elms       = typeof elms === 'string' ? document.querySelectorAll(elms) : elms && elms.length ? elms : [elms];
-    classNames = classNames instanceof Array ? classNames.map(function(name){ return name.trim();}) : classNames.trim().replace(/\s+/g, ' ').split(' ');
+module.exports = function(target, classNames) {
+    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
 
-    function removeClassNames(elm) {
-        // Native
-        if (elm.classList) {
-            classNames.forEach(function(className) {
-                elm.classList.remove(className);
-            });
+    function removeClassNames(elm, classNames) {
+        // Convert to array and trim values
+        classNames = util.classNamesToArray(classNames);
+
+        if (classNames && classNames.length) {
+            // Native
+            if (elm.classList) {
+                classNames.forEach(function(className) {
+                    elm.classList.remove(className);
+                });
+            }
+            // Legacy
+            else {
+                var elmClasses = elm.className.split(' ');
+
+                classNames.forEach(function(className) {
+                    var index = elmClasses.indexOf(className);
+
+                    if (index > -1) {
+                        elmClasses[index] = '';
+                    }
+                });
+
+                elm.className = elmClasses.join(' ');
+            }
         }
-        // Legacy
+    }
+
+    for (var i = 0, len = elms.length; i < len; i++) {
+        if (classNames instanceof Function) {
+            removeClassNames(elms[i], classNames(elms[i], i));
+        }
         else {
-            var elmClasses = elm.className.split(' ');
-
-            classNames.forEach(function(className) {
-                var index = elmClasses.indexOf(className);
-
-                if (index > -1) {
-                    elmClasses[index] = '';
-                }
-            });
-
-            elm.className = elmClasses.join(' ');
+            removeClassNames(elms[i], classNames);
         }
     }
 
-    for (var i = 0; i < elms.length; i++) {
-        removeClassNames(elms[i]);
-    }
-
-    return elms;
+    return elms.length === 1 ? elms[0] : elms;
 };

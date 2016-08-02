@@ -1,7 +1,7 @@
 {
   "name": "class-change",
   "version": "0.0.4",
-  "description": "Simplified CSS class change event delegation and multi-class add, remove and toggle methods",
+  "description": "A small, dependency-free micro-library for manipulating CSS class names and generating class change event listeners.",
   "author": "John Hildenbiddle (http://hildenbiddle.com)",
   "license": "MIT",
   "homepage": "https://github.com/jhildenbiddle/class-change#readme",
@@ -13,26 +13,32 @@
     "url": "https://github.com/jhildenbiddle/class-change/issues"
   },
   "keywords": [
-    "css",
     "change",
     "class",
     "classChange",
     "classList",
+    "css",
     "delegate",
+    "delegation",
     "event",
+    "listener",
     "polyfill"
   ],
   "dependencies": {},
   "devDependencies": {
+    "browser-sync": "^2.14.0",
     "browserify": "^13.0.0",
+    "nodemon": "^1.10.0",
     "uglifyify": "^3.0.1"
   },
   "main": "index.js",
   "scripts": {
+    "build": "npm run build:js && npm run build:js:min",
+    "build:js": "browserify index.js -s classChange > dist/class-change.js",
+    "build:js:min": "browserify -g uglifyify index.js -s classChange > dist/class-change.min.js",
+    "serve": "browser-sync start --server 'demo' --files 'demo' --serveStatic 'dist' --reload-on-restart --no-open --no-notify",
+    "start": "npm run build && npm run serve & npm run watch:js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:dev": "browserify index.js -s classChange > dist/class-change.js",
-    "build:min": "browserify -g uglifyify index.js -s classChange > dist/class-change.min.js",
-    "prebuild": "mkdir -p dist/",
-    "build": "npm run build:dev && npm run build:min"
+    "watch:js": "nodemon --watch src -e js -x npm run build"
   }
 }

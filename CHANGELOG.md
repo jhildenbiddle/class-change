@@ -27,3 +27,27 @@
 **Fixed**
 - toggle() force feature with IE10/11
 - Changing multiple class names with IE10/11
+
+## 1.0.0 - 2016-08-01
+**Breaking changes from previous versions**
+- delegate() has been renamed to listener().
+- The "matches" option from delegate() has been renamed "match" for listener().
+- The arguments previously passed to delegate() "change" option have changed
+  for listener(). See the README for details.
+
+**Added**
+- add(), remove() and toggle() support Functions as "classNames" arg.
+- listener() supports Functions as option values.
+- Adding library to Bower.
+
+**Changed**
+- add(), remove() and toggle() now return an element when a single element
+  is passed as "target" (previously an array with one item was returned).
+- listener() "target" option will now create an event listener for all Nodes
+  specified. This allows for adding event listeners directly to multiple nodes
+  instead of delegating a single event to a parent node.
+- Updated README.md.
+
+**Fixed**
+- Passing "falsey" values as class names to add(), remove(), toggle() and
+  listen() will no longer throw an error.

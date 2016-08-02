@@ -1,7 +1,7 @@
 // Modules
 // =============================================================================
 var add      = require('./src/add');
-var delegate = require('./src/delegate');
+var listener = require('./src/listener');
 var remove   = require('./src/remove');
 var toggle   = require('./src/toggle');
 
@@ -9,7 +9,7 @@ var toggle   = require('./src/toggle');
 // =============================================================================
 module.exports = {
     add     : add,
-    delegate: delegate,
+    listener: listener,
     remove  : remove,
     toggle  : toggle
 };

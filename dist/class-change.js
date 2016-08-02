@@ -2,7 +2,7 @@
 // Modules
 // =============================================================================
 var add      = require('./src/add');
-var delegate = require('./src/delegate');
+var listener = require('./src/listener');
 var remove   = require('./src/remove');
 var toggle   = require('./src/toggle');
 
@@ -10,142 +10,212 @@ var toggle   = require('./src/toggle');
 // =============================================================================
 module.exports = {
     add     : add,
-    delegate: delegate,
+    listener: listener,
     remove  : remove,
     toggle  : toggle
 };
 
-},{"./src/add":2,"./src/delegate":3,"./src/remove":4,"./src/toggle":5}],2:[function(require,module,exports){
+},{"./src/add":2,"./src/listener":3,"./src/remove":4,"./src/toggle":5}],2:[function(require,module,exports){
+// Modules
+// =============================================================================
+var util = require('./util');
+
 // Exports
 // =============================================================================
-module.exports = function(elms, classNames) {
-    elms       = typeof elms === 'string' ? document.querySelectorAll(elms) : elms && elms.length ? elms : [elms];
-    classNames = classNames instanceof Array ? classNames.map(function(name){ return name.trim();}) : classNames.trim().replace(/\s+/g, ' ').split(' ');
+module.exports = function(target, classNames) {
+    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
 
-    function addClassNames(elm) {
-        // Native
-        if (elm.classList) {
-            classNames.forEach(function(className) {
-                elm.classList.add(className);
-            });
+    function addClassNames(elm, classNames) {
+        // Convert to array and trim values
+        classNames = util.classNamesToArray(classNames);
+
+        if (classNames && classNames.length) {
+            // Native
+            if (elm.classList) {
+                classNames.forEach(function(className) {
+                    elm.classList.add(className);
+                });
+            }
+            // Legacy
+            else {
+                var elmClasses = elm.className.split(' ');
+
+                classNames.forEach(function(className) {
+                    if (elmClasses.indexOf(className) === -1) {
+                        elmClasses.push(className);
+                    }
+                });
+
+                elm.className = elmClasses.join(' ');
+            }
         }
-        // Legacy
+    }
+
+    for (var i = 0, len = elms.length; i < len; i++) {
+        if (classNames instanceof Function) {
+            addClassNames(elms[i], classNames(elms[i], i));
+        }
         else {
-            var elmClasses = elm.className.split(' ');
-
-            classNames.forEach(function(className) {
-                if (elmClasses.indexOf(className) === -1) {
-                    elmClasses.push(className);
-                }
-            });
-
-            elm.className = elmClasses.join(' ');
+            addClassNames(elms[i], classNames);
         }
     }
 
-    for (var i = 0; i < elms.length; i++) {
-        addClassNames(elms[i]);
-    }
-
-    return elms;
+    return elms.length === 1 ? elms[0] : elms;
 };
 
-},{}],3:[function(require,module,exports){
+},{"./util":6}],3:[function(require,module,exports){
 // Modules
 // =============================================================================
 var classChange = {
-    add   : require('./add'),
-    remove: require('./remove'),
-    toggle: require('./toggle')
-};
+        add   : require('./add'),
+        remove: require('./remove'),
+        toggle: require('./toggle')
+    };
+var util = require('./util');
 
 // Exports
 // =============================================================================
 module.exports = function(options) {
     var settings  = {
-        // Element to apply listener to
         target : options.target  || document.body,
-        // Type of event
         event  : options.event   || 'click',
-        // CSS selector to test against event
-        matches: options.matches || null,
-        // List of class names to add (String or Array)
+        match  : options.match   || null,
+        change : options.change  || null,
         add    : options.add     || null,
-        // List of class names to remove (String or Array)
         remove : options.remove  || null,
-        // List of class names to remove (String or Array)
-        toggle : options.toggle  || null,
-        // Element, Array, Node List, CSS selector or Function
-        // If null, change is applied to event target element
-        change : options.change  || null
+        toggle : options.toggle  || null
     };
 
-    // Target: CSS Selector
+    // Convert settings.target CSS selector to NodeList
     if (typeof settings.target === 'string') {
-        settings.target = document.querySelector(settings.target);
+        settings.target = document.querySelectorAll(settings.target);
+    }
+
+    // Convert single element listener target to an array
+    // Allows for iterating over targets and adding event listeners
+    if (!util.isIterableObj(settings.target)) {
+        settings.target = [settings.target];
     }
 
     // Functions
     // -------------------------------------------------------------------------
     // Add event listener
-    function addListener(changeType) {
-        var listener = function(e) {
-            var eventElm = e.target;
-            var i;
+    function addListener(listenerTarget, changeType) {
+        var listener = function(evt) {
+            var eventElm  = evt.target;
+            var matchElms = settings.match;
+            var triggerChange, i, len;
 
-            // Ensure event element matches
-            if (matchesSelector(eventElm, settings.matches)) {
+            // If matchElms is a function, call the function and set matchElms
+            // to the return value.
+            if (matchElms instanceof Function) {
+                matchElms = matchElms(eventElm, evt);
+            }
+
+            // If matchElms is a CSS selector, trigger the class change event
+            // if the event.target matches the selector.
+            if (typeof matchElms === 'string') {
+                triggerChange = util.matchesSelector(eventElm, matchElms);
+
+                // If it's a match, convert the CSS selector to a NodeList.
+                if (triggerChange) {
+                    matchElms = listenerTarget.querySelectorAll(matchElms);
+                }
+            }
+
+            // If matchElms has not been specified, set matchElms to the
+            // event.target and trigger the change.
+            if (matchElms === null) {
+                matchElms = eventElm;
+                triggerChange = true;
+            }
+            // If matchElms is an iterable object, loop over the items
+            // and check if the event.target trigger the event if it is part of
+            // the collection.
+            else if (util.isIterableObj(matchElms)) {
+                for (i = 0, len = matchElms.length; i < len; i++) {
+                    if (eventElm === matchElms[i]) {
+                        triggerChange = true;
+                        break;
+                    }
+                }
+            }
+            // If matchElms is an non-iterable object, trigger the
+            // class change event if the event.target is the object.
+            else if (typeof matchElms === 'object') {
+                triggerChange = eventElm === matchElms;
+            }
+
+            // Trigger the class change event
+            if (triggerChange) {
+                // Set the elements to receive the class change to either
+                // those specified by settings.change or the event.target
                 var changeElms = settings.change || eventElm;
 
-                // Change: Function
+                // If changeElms is a function, call the function and set
+                // changeElms to the return value.
                 if (changeElms instanceof Function) {
                     var index = null;
 
-                    // Get index of elements within matched nodes
-                    if (settings.matches) {
-                        var matchElms = settings.target.querySelectorAll(settings.matches);
-
-                        for (i = 0; i < matchElms.length; i++) {
-                            if (eventElm == matchElms[i]) {
-                                index = i;
-                                break;
+                    // Get index of the event.target within the collection of
+                    // matched elements to pass to function as argument.
+                    if (matchElms) {
+                        if (util.isIterableObj(matchElms)) {
+                            for (i = 0, len = matchElms.length; i < len; i++) {
+                                if (eventElm === matchElms[i]) {
+                                    index = i;
+                                    break;
+                                }
                             }
                         }
                     }
 
                     // Call change function
-                    changeElms = changeElms(eventElm, index);
+                    // Pass the event.target, the event object and the index
+                    // of the matched element within the matchElms collection.
+                    changeElms = changeElms(eventElm, evt, index);
                 }
 
-                // Change: CSS Selector
+                // If changeElms is a CSS selector convert it to a NodeList
                 if (typeof changeElms === 'string') {
-                    changeElms = settings.target.querySelectorAll(changeElms);
+                    changeElms = document.querySelectorAll(changeElms);
                 }
 
-                // Ensure changeElm(s) exist
-                if (changeElms) {
-                    // Convert single element to array
-                    if (!changeElms.length) {
-                        changeElms = [changeElms];
-                    }
+                // Convert changeElms to an iterable object if necessary
+                if (!util.isIterableObj(changeElms)) {
+                    changeElms = [changeElms];
+                }
 
-                    // Loop through elements and change classes
-                    for (i = 0; i < changeElms.length; i++) {
-                        // Call change method
-                        classChange[changeType](changeElms[i], settings[changeType]);
+                // If the [add/remove/toggle] value is a function, call the
+                // function once for every item in changeElms.
+                if (settings[changeType] instanceof Function) {
+                    for (i = 0, len = changeElms.length; i < len; i++) {
+                        // Each time the function is called, pass the
+                        // event.target, a changeElms item, and the index of
+                        // the item within the changeElms collection.
+                        var classNames = settings[changeType](eventElm, evt, changeElms[i], i);
+
+                        // Now that we have the return value of the
+                        // [add/remove/toggle] function, pass the class names
+                        // to corresponding classChange method.
+                        classChange[changeType](changeElms[i], classNames);
                     }
+                }
+                else {
+                    // Change class names (add/remove/toggle)
+                    classChange[changeType](changeElms, settings[changeType]);
                 }
             }
         };
 
         // Add event listener
-        settings.target.addEventListener(settings.event, listener);
+        listenerTarget.addEventListener(settings.event, listener);
 
         // Store target, event type and listener reference
         var data = {
-            target  : settings.target,
+            target  : listenerTarget,
             event   : settings.event,
-            matches : settings.matches,
+            match   : settings.match,
             change  : settings.change,
             listener: listener
         };
@@ -156,50 +226,33 @@ module.exports = function(options) {
         return data;
     }
 
-    // Cross-browser wrapper for native "matches" method
-    function matchesSelector(elm, selector) {
-        var matchesSelector = elm.matches || elm.matchesSelector || elm.webkitMatchesSelector || elm.mozMatchesSelector || elm.msMatchesSelector || elm.oMatchesSelector;
-        return matchesSelector.call(elm, selector);
-    }
-
     // Data & Methods
     // -------------------------------------------------------------------------
     var ctx = {
         listeners: [],
-        remove: function destroy() {
-            for (var i = 0; i < this.listeners.length; i++) {
-                var listener = this.listeners[i];
+        remove: function remove() {
+            for (var i = 0, len = this.listeners.length; i < len; i++) {
+                var settings = this.listeners[i];
 
-                listener.target.removeEventListener(listener.event, listener.listener);
+                settings.target.removeEventListener(settings.event, settings.listener);
             }
         }
     };
 
     // Main
     // -------------------------------------------------------------------------
-    // Loop through class lists
-    ['toggle', 'remove', 'add'].forEach(function(changeType) {
-        var list = settings[changeType];
+    // Loop through event listener targets
+    settings.target.forEach(function(listenerTarget) {
+        // Loop through class lists
+        ['toggle', 'remove', 'add'].forEach(function(changeType) {
+            if (settings[changeType]) {
+                // Add event listener
+                var listener = addListener(listenerTarget, changeType);
 
-        if (list) {
-            // Convert values to arrays
-            if (typeof list === 'string') {
-                // Trim class names and create array of class names
-                settings[changeType] = list.trim().replace(/\s+/g, ' ').split(' ');
+                // Push listener reference
+                ctx.listeners.push(listener);
             }
-            else {
-                // Trim class names
-                settings[changeType] = settings[changeType].map(function(className) {
-                    return className.trim();
-                });
-            }
-
-            // Add event listener
-            var listener = addListener(changeType);
-
-            // Push listener reference
-            ctx.listeners.push(listener);
-        }
+        });
     });
 
     // Return Data & Methods
@@ -207,94 +260,153 @@ module.exports = function(options) {
     return ctx;
 };
 
-},{"./add":2,"./remove":4,"./toggle":5}],4:[function(require,module,exports){
+},{"./add":2,"./remove":4,"./toggle":5,"./util":6}],4:[function(require,module,exports){
+// Modules
+// =============================================================================
+var util = require('./util');
+
 // Exports
 // =============================================================================
-module.exports = function(elms, classNames) {
-    elms       = typeof elms === 'string' ? document.querySelectorAll(elms) : elms && elms.length ? elms : [elms];
-    classNames = classNames instanceof Array ? classNames.map(function(name){ return name.trim();}) : classNames.trim().replace(/\s+/g, ' ').split(' ');
+module.exports = function(target, classNames) {
+    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
 
-    function removeClassNames(elm) {
-        // Native
-        if (elm.classList) {
-            classNames.forEach(function(className) {
-                elm.classList.remove(className);
-            });
+    function removeClassNames(elm, classNames) {
+        // Convert to array and trim values
+        classNames = util.classNamesToArray(classNames);
+
+        if (classNames && classNames.length) {
+            // Native
+            if (elm.classList) {
+                classNames.forEach(function(className) {
+                    elm.classList.remove(className);
+                });
+            }
+            // Legacy
+            else {
+                var elmClasses = elm.className.split(' ');
+
+                classNames.forEach(function(className) {
+                    var index = elmClasses.indexOf(className);
+
+                    if (index > -1) {
+                        elmClasses[index] = '';
+                    }
+                });
+
+                elm.className = elmClasses.join(' ');
+            }
         }
-        // Legacy
+    }
+
+    for (var i = 0, len = elms.length; i < len; i++) {
+        if (classNames instanceof Function) {
+            removeClassNames(elms[i], classNames(elms[i], i));
+        }
         else {
-            var elmClasses = elm.className.split(' ');
-
-            classNames.forEach(function(className) {
-                var index = elmClasses.indexOf(className);
-
-                if (index > -1) {
-                    elmClasses[index] = '';
-                }
-            });
-
-            elm.className = elmClasses.join(' ');
+            removeClassNames(elms[i], classNames);
         }
     }
 
-    for (var i = 0; i < elms.length; i++) {
-        removeClassNames(elms[i]);
-    }
-
-    return elms;
+    return elms.length === 1 ? elms[0] : elms;
 };
 
-},{}],5:[function(require,module,exports){
+},{"./util":6}],5:[function(require,module,exports){
 // Modules
 // =============================================================================
 var classChange = {
-    add   : require('./add'),
-    remove: require('./remove')
-};
+        add   : require('./add'),
+        remove: require('./remove')
+    };
+var util = require('./util');
 
 // Exports
 // =============================================================================
-module.exports = function(elms, classNames, forceTrueFalse) {
-    elms           = typeof elms === 'string' ? document.querySelectorAll(elms) : elms && elms.length ? elms : [elms];
-    classNames     = classNames instanceof Array ? classNames.map(function(name){ return name.trim();}) : classNames.trim().replace(/\s+/g, ' ').split(' ');
+module.exports = function(target, classNames, forceTrueFalse) {
+    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
     forceTrueFalse = forceTrueFalse || null;
 
-    function toggleClassNames(elm) {
-        // Native
-        if (elm.classList) {
-            classNames.forEach(function(className) {
-                if (forceTrueFalse === true) {
-                    elm.classList.add(className);
-                }
-                else if (forceTrueFalse === false) {
-                    elm.classList.remove(className);
-                }
-                else {
-                    elm.classList.toggle(className);
-                }
-            });
+    function toggleClassNames(elm, classNames) {
+        // Convert to array and trim values
+        classNames = util.classNamesToArray(classNames);
+
+        if (classNames && classNames.length) {
+            // Native
+            if (elm.classList) {
+                classNames.forEach(function(className) {
+                    if (forceTrueFalse === true) {
+                        elm.classList.add(className);
+                    }
+                    else if (forceTrueFalse === false) {
+                        elm.classList.remove(className);
+                    }
+                    else {
+                        elm.classList.toggle(className);
+                    }
+                });
+            }
+            // Legacy
+            else {
+                var elmClasses = elm.className.split(' ');
+
+                classNames.forEach(function(className) {
+                    if (forceTrueFalse === false || (forceTrueFalse === null && elmClasses.indexOf(className) > -1)) {
+                        classChange.remove(elm, className);
+                    }
+                    else if (forceTrueFalse === true || (forceTrueFalse === null && elmClasses.indexOf(className) === -1)) {
+                        classChange.add(elm, className);
+                    }
+                });
+            }
         }
-        // Legacy
+    }
+
+    for (var i = 0, len = elms.length; i < len; i++) {
+        if (classNames instanceof Function) {
+            toggleClassNames(elms[i], classNames(elms[i], i));
+        }
         else {
-            var elmClasses = elm.className.split(' ');
-
-            classNames.forEach(function(className) {
-                if (forceTrueFalse === false || (forceTrueFalse === null && elmClasses.indexOf(className) > -1)) {
-                    classChange.remove(elm, className);
-                }
-                else if (forceTrueFalse === true || (forceTrueFalse === null && elmClasses.indexOf(className) === -1)) {
-                    classChange.add(elm, className);
-                }
-            });
+            toggleClassNames(elms[i], classNames);
         }
     }
 
-    for (var i = 0; i < elms.length; i++) {
-        toggleClassNames(elms[i]);
-    }
-
-    return elms;
+    return elms.length === 1 ? elms[0] : elms;
 };
 
-},{"./add":2,"./remove":4}]},{},[1])(1)
+},{"./add":2,"./remove":4,"./util":6}],6:[function(require,module,exports){
+// Exports
+// =============================================================================
+module.exports = {
+    classNamesToArray: function(classNames) {
+        // String - Trim and convert to Array
+        if (typeof classNames === 'string') {
+            classNames = classNames.trim().replace(/\s+/g, ' ').split(' ');
+        }
+
+        // Trim array items
+        if (Array.isArray(classNames)) {
+            classNames = classNames.map(function(name) {
+                return name && name.length ? name.trim() : null;
+            });
+
+            // Filter out "falsey" values
+            classNames = classNames.filter(Boolean);
+        }
+
+        return classNames;
+    },
+    // Returns true/false if "obj" is an Object and is iterable
+    isIterableObj: function(obj) {
+        var isIterable = obj ? typeof obj[Symbol.iterator] === 'function' : false;
+        var isObject   = typeof obj === 'object';
+
+        return (isObject && isIterable);
+    },
+    // Cross-browser wrapper for native "matches" method
+    matchesSelector: function(elm, selector) {
+        var matches = elm.matches || elm.matchesSelector || elm.webkitMatchesSelector || elm.mozMatchesSelector || elm.msMatchesSelector || elm.oMatchesSelector;
+        return matches.call(elm, selector);
+    }
+};
+
+},{}]},{},[1])(1)
 });

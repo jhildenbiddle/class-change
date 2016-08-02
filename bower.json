@@ -1,0 +1,37 @@
+{
+  "name": "class-change",
+  "description": "A small, dependency-free micro-library for manipulating CSS class names and generating class change event listeners.",
+  "main": "dist/class-change.js",
+  "authors": [
+    "John Hildenbiddle (http://hildenbiddle.com)"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "keywords": [
+    "change",
+    "class",
+    "classChange",
+    "classList",
+    "css",
+    "delegate",
+    "delegation",
+    "event",
+    "listener",
+    "polyfill"
+  ],
+  "homepage": "https://github.com/jhildenbiddle/class-change",
+  "ignore": [
+    "**/.*",
+    "bower_components",
+    "demo",
+    "node_modules",
+    "package.json",
+    "src",
+    "test",
+    "tests"
+  ]
+}

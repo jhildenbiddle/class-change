@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>classChange.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    <main>
+        <h1>class-change.js</h1>
+
+        <hr>
+
+        <section class="methods">
+            <h2>Methods</h2>
+            <div class="add">
+                <button data-classname="foo" onclick="classChange.add(this.parentNode, 'active');">Add</button>
+            </div>
+            <div class="remove active">
+                <button data-classname="bar" onclick="classChange.remove(this.parentNode, 'active');">Remove</button>
+            </div>
+            <div class="toggle active">
+                <button data-classname="baz" onclick="classChange.toggle(this.parentNode, 'active');">Toggle</button>
+            </div>
+        </section>
+
+        <section class="listener">
+            <h2>Event Listeners</h2>
+            <div class="add">
+                <button>Add</button>
+            </div>
+            <div class="remove active">
+                <button>Remove</button>
+            </div>
+            <div class="toggle active">
+                <button>Toggle</button>
+            </div>
+        </section>
+
+        <section class="functions">
+            <h2>Event Listeners using Functions</h2>
+            <div class="match">
+                <button>options.match</button>
+            </div>
+            <div class="change">
+                <button>options.change</button>
+            </div>
+            <div class="toggle">
+                <button data-classnames="active">options.toggle</button>
+            </div>
+        </section>
+
+        <p>
+            <a href="#" data-method="remove">Remove event listeners</a>
+        </p>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Detect path to class-change.js
+        // Allows serving class-list.js from /dist directory when demo is
+        // served from BrowserSync, web server or as a file. If a port
+        // value is detected, assume the demo is being served by BrowserSync.
+        var path = window.location.port ? '/' : '../dist/';
+        document.write('<script src="' + path + 'class-change.js"><\/script>');
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
