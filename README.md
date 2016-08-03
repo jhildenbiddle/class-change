@@ -1,4 +1,5 @@
 # class-change.js
+
 A small, dependency-free micro-library for manipulating CSS class names and generating class change event listeners.
 
 **Features**
@@ -14,6 +15,21 @@ A small, dependency-free micro-library for manipulating CSS class names and gene
 
 [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) already provides an API for manipulating CSS class names, but [some browsers](http://caniuse.com/#feat=classlist) suffer from incomplete implementations or lack support entirely. [Polyfills](https://github.com/eligrey/classList.js/) are available that add classList support to older browsers, but neither polyfills nor native classList methods offer the convenience features provided by this library because these features are not part of the official Element.classList specification.
 
+**Need an example?**
+
+Here is a basic example of how to create a class change event listener using the `listen` method. More advanced examples are provided in the [listener method](#listeneroptions) section.
+
+```javascript
+var myListener = classChange.listener({
+  target: document.body, // Add an event listener to the document.body (default)
+  event : 'click',       // Listen for "click" events (default)
+  match : 'a',           // If the clicked element is an <a> tag
+  change: 'img',         // Change class names on all <img> elements as follows:
+  add   : 'foo',         // Add the "foo" class name
+  remove: 'bar',         // Remove the "bar" class name
+  toggle: 'baz buzz'     // Toggle the "baz" and "buzz" class names
+});
+```
 
 ## Installation
 
@@ -54,7 +70,7 @@ Adds or removes class names on the target elements.
 
 **Returns**
 
-* Node(s) specified by `target`.
+- Node(s) specified by `target`.
 
 **Examples**
 
@@ -84,7 +100,7 @@ Toggles class names on the target elements.
 
 **Returns**
 
-* Node(s) specified by `target`.
+- Node(s) specified by `target`.
 
 **Examples**
 
@@ -124,9 +140,9 @@ Registers an event listener that will trigger a class change event based on the 
 
 **Returns**
 
-* Returns an object containing a `remove()` method for removing the event listener.
+- Returns an object containing a `remove()` method for removing the event listener.
 
-**Example #1: Standard option values**
+**Example #1: Standard option values & removing event listeners**
 
 ```javascript
 var myListener = classChange.listener({
@@ -140,14 +156,19 @@ var myListener = classChange.listener({
 });
 ```
 
+```javascript
+// Removing the event listener
+myListener.remove();
+```
+
 **Example #2: `options.match` Function**
 
 Using a function for `options.match` provides additional control over when a class change event is triggered. For example, you may want to conditionally perform a class change based on the state of your application.
 
 The following arguments are passed to an `options.match` function:
 
-* `eventTarget`: The element that triggered the event (i.e. the "clicked" element).
-* `eventObject`: The event object.
+- `eventTarget`: The element that triggered the event (i.e. the "clicked" element).
+- `eventObject`: The event object.
 
 The Function is expected to return a CSS selector (String) or Node(s) to match the *event.target* against, or a Boolean (`true` / `false`) to indicate if a class change event should be triggered.
 
@@ -182,7 +203,7 @@ The following arguments are passed to an `options.change` function:
 2. `eventObject`: The event object.
 3. `matchNodeIndex`: The index of the `eventTarget` within the `options.match` collection.
 
-When a Function is provided, it is called once for each `option.match` Node. On each call, a Node and its index are passed as arguments.
+The Function is expected to return a CSS selector (String) or Node(s) to apply class changes to.
 
 ```javascript
 var myListener = classChange.listener({
@@ -190,7 +211,9 @@ var myListener = classChange.listener({
   event : 'click',
   match : 'a',
   change: function(eventTarget, eventObject, matchNodeIndex) {
-    // Change the class name(s) of the clicked <a> tag's parent node
+    // Change the class name(s) of the clicked <a> tag's parent node.
+    // To change multiple elements, return a CSS selector or a
+    // collection of Nodes.
     return eventTarget.parentNode;
   },
   toggle: 'foo'
@@ -199,9 +222,9 @@ var myListener = classChange.listener({
 
 **Example #4: `options.[add|remove|toggle]` Functions**
 
-Using a function for `options.[add|remove|toggle]` allows dynamically generating a list of class names to add, remove or toggle. For example, you may want to create class names based on a property value or the index of Node.
+Using a function for `options.[add|remove|toggle]` allows dynamically generating a list of class names to add, remove or toggle. For example, you may want to create class names based on a property value or the index of a Node.
 
-*Note that when `options.change` specifies a collection of Nodes, `options.[add|remove|toggle]` functions are called one time for each Node in the collection with the Node and its index passed to the function.* This feature allows you to generate custom class names for each Node in the collection.
+*Note that when `options.change` specifies a collection of Nodes, `options.[add|remove|toggle]` functions are called one time for each Node in the collection. On each call, a Node and its index within the `options.change` collection are passed as arguments. This feature allows you to generate custom class names for each Node in the collection.*
 
 The following arguments are passed to an `options.[add|remove|toggle]` function:
 
@@ -210,7 +233,7 @@ The following arguments are passed to an `options.[add|remove|toggle]` function:
 3. `changeNode`: The current Node class changes are being applied to.
 4. `changeNodeIndex`: The index of the `changeNode` within the `options.change` collection.
 
-When a Function is provided, it is called once for each `option.change` Node. On each call, a Node and its index are passed as arguments.
+The Function is expected to return a space-separated list or an Array of class names to add, remove, or toggle on the Nodes specified by `options.change` (or the `eventTarget` if `options.changes` has not been specified).
 
 ```javascript
 var myListener = classChange.listener({
@@ -222,22 +245,19 @@ var myListener = classChange.listener({
     // Get the "data-classname" attribute value from the eventTarget
     var className1 = eventTarget.getAttribute('data-classname') || null;
     
-    // Get the "data-classname" attribute value from each <img> tag
+    // Get the "data-classname" attribute value from the current <img> Node
     var className2 = changeNode.getAttribute('data-classname') || null;
     
-    // Generate a class name based on the <img> element's index
+    // Generate a class name based on the current <img> Node's index
     var className3 = 'myclass' + (changeNodeIndex + 1);
     
-    // Prevent the default behavior of the <a> tag
+    // Prevent the default event behavior
     eventObject.preventDefault();
     
-    // Toggle the dynamically generated class names on each <img> element
+    // Toggle the class names on each <img> Node
     return [className1, className2, className3];
   }
 });
-
-// Removing an event listeners
-myListener.remove();
 ```
 
 ## License
