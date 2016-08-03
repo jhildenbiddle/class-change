@@ -1,6 +1,9 @@
 # Folders
 node_modules
 
+# Files
+*.log
+
 # OS
 ._*
 .cache
