@@ -1,9 +1,9 @@
 // Modules
 // =============================================================================
-var add      = require('./src/add');
-var listener = require('./src/listener');
-var remove   = require('./src/remove');
-var toggle   = require('./src/toggle');
+var add      = require('./add');
+var listener = require('./listener');
+var remove   = require('./remove');
+var toggle   = require('./toggle');
 
 // Exports
 // =============================================================================

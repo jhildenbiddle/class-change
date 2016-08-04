@@ -9,7 +9,7 @@ A small, dependency-free micro-library for manipulating CSS class names and gene
 - The ability to change class names on multiple elements in a single method call
 - The ability to specify class names as arrays or space-separated lists
 - A UMD library that works in the browser or as an AMD/CommonJS module
-- Lightweight (1.6k minified + gzipped) and dependency free
+- Lightweight (1.3k minified + gzipped) and dependency free
 
 **What about Element.classList?**
 

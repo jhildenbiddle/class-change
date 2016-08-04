@@ -24,21 +24,20 @@
     "listener",
     "polyfill"
   ],
-  "dependencies": {},
+  "main": "src/index.js",
+  "scripts": {
+    "build": "webpack --hide-modules",
+    "clean": "rimraf dist/*",
+    "serve": "browser-sync start --server 'demo' --files 'demo,dist' --serveStatic 'dist' --reload-on-restart --no-open --no-notify",
+    "start": "npm run clean && npm run watch & npm run serve",
+    "test" : "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon package.json & npm run build -- --watch"
+  },
   "devDependencies": {
     "browser-sync": "^2.14.0",
-    "browserify": "^13.0.0",
+    "deepcopy": "^0.6.3",
     "nodemon": "^1.10.0",
-    "uglifyify": "^3.0.1"
-  },
-  "main": "index.js",
-  "scripts": {
-    "build": "npm run build:js && npm run build:js:min",
-    "build:js": "browserify index.js -s classChange > dist/class-change.js",
-    "build:js:min": "browserify -g uglifyify index.js -s classChange > dist/class-change.min.js",
-    "serve": "browser-sync start --server 'demo' --files 'demo' --serveStatic 'dist' --reload-on-restart --no-open --no-notify",
-    "start": "npm run build && npm run serve & npm run watch:js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:js": "nodemon --watch src -e js -x npm run build"
+    "rimraf": "^2.5.4",
+    "webpack": "^1.13.1"
   }
 }
