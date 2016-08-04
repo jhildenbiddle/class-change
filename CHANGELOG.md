@@ -51,3 +51,11 @@
 **Fixed**
 - Passing "falsey" values as class names to add(), remove(), toggle() and
   listen() will no longer throw an error.
+
+## 1.0.1 - 2016-08-03
+**Added**
+- Minor updated to Bower config, .gitignore and README.md
+
+## 1.0.2 - 2016-08-04
+**Added**
+- Switched build to webpack
