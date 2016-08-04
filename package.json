@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A small, dependency-free micro-library for manipulating CSS class names and generating class change event listeners.",
   "author": "John Hildenbiddle (http://hildenbiddle.com)",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "clean": "rimraf dist/*",
     "serve": "browser-sync start --server 'demo' --files 'demo,dist' --serveStatic 'dist' --reload-on-restart --no-open --no-notify",
     "start": "npm run clean && npm run watch & npm run serve",
-    "test" : "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "watch": "nodemon package.json & npm run build -- --watch"
   },
   "devDependencies": {
