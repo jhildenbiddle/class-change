@@ -59,3 +59,7 @@
 ## 1.0.2 - 2016-08-04
 **Added**
 - Switched build to webpack
+
+## 1.0.3 - 2016-09-18
+**Fixed**
+- Iterable class list check that prevented classChange from working in IE.

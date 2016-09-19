@@ -27,7 +27,7 @@ module.exports = function(options) {
 
     // Convert single element listener target to an array
     // Allows for iterating over targets and adding event listeners
-    if (!util.isIterableObj(settings.target)) {
+    if (!util.isIterableList(settings.target)) {
         settings.target = [settings.target];
     }
 
@@ -66,7 +66,7 @@ module.exports = function(options) {
             // If matchElms is an iterable object, loop over the items
             // and check if the event.target trigger the event if it is part of
             // the collection.
-            else if (util.isIterableObj(matchElms)) {
+            else if (util.isIterableList(matchElms)) {
                 for (i = 0, len = matchElms.length; i < len; i++) {
                     if (eventElm === matchElms[i]) {
                         triggerChange = true;
@@ -94,7 +94,7 @@ module.exports = function(options) {
                     // Get index of the event.target within the collection of
                     // matched elements to pass to function as argument.
                     if (matchElms) {
-                        if (util.isIterableObj(matchElms)) {
+                        if (util.isIterableList(matchElms)) {
                             for (i = 0, len = matchElms.length; i < len; i++) {
                                 if (eventElm === matchElms[i]) {
                                     index = i;
@@ -116,7 +116,7 @@ module.exports = function(options) {
                 }
 
                 // Convert changeElms to an iterable object if necessary
-                if (!util.isIterableObj(changeElms)) {
+                if (!util.isIterableList(changeElms)) {
                     changeElms = [changeElms];
                 }
 
@@ -176,18 +176,20 @@ module.exports = function(options) {
     // Main
     // -------------------------------------------------------------------------
     // Loop through event listener targets
-    settings.target.forEach(function(listenerTarget) {
+    for (var i = 0, len = settings.target.length; i < len; i++) {
+        var currentTarget = settings.target[i];
+
         // Loop through class lists
         ['toggle', 'remove', 'add'].forEach(function(changeType) {
             if (settings[changeType]) {
                 // Add event listener
-                var listener = addListener(listenerTarget, changeType);
+                var listener = addListener(currentTarget, changeType);
 
                 // Push listener reference
                 ctx.listeners.push(listener);
             }
         });
-    });
+    }
 
     // Return Data & Methods
     // -------------------------------------------------------------------------

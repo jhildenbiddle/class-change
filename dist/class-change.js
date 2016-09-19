@@ -96,12 +96,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	        return classNames;
 	    },
-	    // Returns true/false if "obj" is an Object and is iterable
-	    isIterableObj: function(obj) {
-	        var isIterable = obj ? typeof obj[Symbol.iterator] === 'function' : false;
-	        var isObject   = typeof obj === 'object';
+	    // Returns true/false if "obj" is an Array or NodeList
+	    isIterableList: function(obj) {
+	        return this.isType(obj, 'array|nodelist');
+	    },
+	    // Returns true/false if type match
+	    // Test multiple types using "|" as separator (Ex: "type1|type2")
+	    isType: function(val, type) {
+	        var re = new RegExp(type.toLowerCase());
 
-	        return (isObject && isIterable);
+	        return re.test(this.getType(val).toLowerCase());
+	    },
+	    // Returns specific JavaScript type (more specific than typeof)
+	    getType: function(val) {
+	        return Object.prototype.toString.call(val).slice(8,-1);
 	    },
 	    // Cross-browser wrapper for native "matches" method
 	    matchesSelector: function(elm, selector) {
@@ -122,7 +130,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Exports
 	// =============================================================================
 	module.exports = function(target, classNames) {
-	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
+	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableList(target) ? target : [target];
 
 	    function addClassNames(elm, classNames) {
 	        // Convert to array and trim values
@@ -174,7 +182,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Exports
 	// =============================================================================
 	module.exports = function(target, classNames) {
-	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
+	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableList(target) ? target : [target];
 
 	    function removeClassNames(elm, classNames) {
 	        // Convert to array and trim values
@@ -232,7 +240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Exports
 	// =============================================================================
 	module.exports = function(target, classNames, forceTrueFalse) {
-	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
+	    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableList(target) ? target : [target];
 	    forceTrueFalse = forceTrueFalse || null;
 
 	    function toggleClassNames(elm, classNames) {
@@ -316,7 +324,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    // Convert single element listener target to an array
 	    // Allows for iterating over targets and adding event listeners
-	    if (!util.isIterableObj(settings.target)) {
+	    if (!util.isIterableList(settings.target)) {
 	        settings.target = [settings.target];
 	    }
 
@@ -355,7 +363,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            // If matchElms is an iterable object, loop over the items
 	            // and check if the event.target trigger the event if it is part of
 	            // the collection.
-	            else if (util.isIterableObj(matchElms)) {
+	            else if (util.isIterableList(matchElms)) {
 	                for (i = 0, len = matchElms.length; i < len; i++) {
 	                    if (eventElm === matchElms[i]) {
 	                        triggerChange = true;
@@ -383,7 +391,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                    // Get index of the event.target within the collection of
 	                    // matched elements to pass to function as argument.
 	                    if (matchElms) {
-	                        if (util.isIterableObj(matchElms)) {
+	                        if (util.isIterableList(matchElms)) {
 	                            for (i = 0, len = matchElms.length; i < len; i++) {
 	                                if (eventElm === matchElms[i]) {
 	                                    index = i;
@@ -405,7 +413,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                }
 
 	                // Convert changeElms to an iterable object if necessary
-	                if (!util.isIterableObj(changeElms)) {
+	                if (!util.isIterableList(changeElms)) {
 	                    changeElms = [changeElms];
 	                }
 
@@ -465,18 +473,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Main
 	    // -------------------------------------------------------------------------
 	    // Loop through event listener targets
-	    settings.target.forEach(function(listenerTarget) {
+	    for (var i = 0, len = settings.target.length; i < len; i++) {
+	        var currentTarget = settings.target[i];
+
 	        // Loop through class lists
 	        ['toggle', 'remove', 'add'].forEach(function(changeType) {
 	            if (settings[changeType]) {
 	                // Add event listener
-	                var listener = addListener(listenerTarget, changeType);
+	                var listener = addListener(currentTarget, changeType);
 
 	                // Push listener reference
 	                ctx.listeners.push(listener);
 	            }
 	        });
-	    });
+	    }
 
 	    // Return Data & Methods
 	    // -------------------------------------------------------------------------

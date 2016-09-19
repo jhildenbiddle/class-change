@@ -19,12 +19,20 @@ module.exports = {
 
         return classNames;
     },
-    // Returns true/false if "obj" is an Object and is iterable
-    isIterableObj: function(obj) {
-        var isIterable = obj ? typeof obj[Symbol.iterator] === 'function' : false;
-        var isObject   = typeof obj === 'object';
+    // Returns true/false if "obj" is an Array or NodeList
+    isIterableList: function(obj) {
+        return this.isType(obj, 'array|nodelist');
+    },
+    // Returns true/false if type match
+    // Test multiple types using "|" as separator (Ex: "type1|type2")
+    isType: function(val, type) {
+        var re = new RegExp(type.toLowerCase());
 
-        return (isObject && isIterable);
+        return re.test(this.getType(val).toLowerCase());
+    },
+    // Returns specific JavaScript type (more specific than typeof)
+    getType: function(val) {
+        return Object.prototype.toString.call(val).slice(8,-1);
     },
     // Cross-browser wrapper for native "matches" method
     matchesSelector: function(elm, selector) {

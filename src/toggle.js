@@ -9,7 +9,7 @@ var util = require('./util');
 // Exports
 // =============================================================================
 module.exports = function(target, classNames, forceTrueFalse) {
-    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableObj(target) ? target : [target];
+    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableList(target) ? target : [target];
     forceTrueFalse = forceTrueFalse || null;
 
     function toggleClassNames(elm, classNames) {
