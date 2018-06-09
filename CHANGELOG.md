@@ -1,65 +1,107 @@
 # Change Log
 
-## 0.0.1 - 2016-03-05
-**Added**
-- Initial release
+## 2.0.0
 
-## 0.0.2 - 2016-03-05
-**Changed**
-- Switched to browserify and separate modules for each method
+*2018-06-09*
 
-## 0.0.3 - 2016-03-06
-**Added**
-- Index page
+**Breaking changes from 1.x**
 
-**Changed**
-- Specify elements using CSS selector with add/remove/toggle methods
-- Handle multiple elements being passed to add/remove/toggle methods
+- ???
 
-## 0.0.4 - 2016-03-07
-**Added**
-- New demos to index.html
-- Library documentation added to README
+## 1.0.3
 
-**Changed**
-- destroy() method renamed to remove()
+*2016-09-18*
 
 **Fixed**
-- toggle() force feature with IE10/11
-- Changing multiple class names with IE10/11
 
-## 1.0.0 - 2016-08-01
-**Breaking changes from previous versions**
-- delegate() has been renamed to listener().
-- The "matches" option from delegate() has been renamed "match" for listener().
-- The arguments previously passed to delegate() "change" option have changed
-  for listener(). See the README for details.
+- Iterable class list check that prevented classChange from working in IE
+
+## 1.0.2
+
+*2016-08-04*
 
 **Added**
-- add(), remove() and toggle() support Functions as "classNames" arg.
-- listener() supports Functions as option values.
-- Adding library to Bower.
+
+- Switched build to webpack
+
+## 1.0.1
+
+*2016-08-03*
+
+**Added**
+
+- Minor updated to Bower config, .gitignore and README.md
+
+## 1.0.0
+
+*2016-08-01*
+
+**Breaking changes from 0.x**
+
+- The delegate() method has been renamed to listener()
+- The delegate() "matches" option has been renamed "match" for listener()
+- The delegate() arguments have changed for listener()
+
+**Added**
+
+- add(), remove() and toggle() support Functions as "classNames" arg
+- listener() supports Functions as option values
+- Adding library to Bower
 
 **Changed**
+
 - add(), remove() and toggle() now return an element when a single element
-  is passed as "target" (previously an array with one item was returned).
+  is passed as "target" (previously an array with one item was returned)
 - listener() "target" option will now create an event listener for all Nodes
   specified. This allows for adding event listeners directly to multiple nodes
   instead of delegating a single event to a parent node.
-- Updated README.md.
+- Updated README.md
 
 **Fixed**
+
 - Passing "falsey" values as class names to add(), remove(), toggle() and
-  listen() will no longer throw an error.
+  listen() will no longer throw an error
 
-## 1.0.1 - 2016-08-03
+## 0.0.4
+
+*2016-03-07*
+
 **Added**
-- Minor updated to Bower config, .gitignore and README.md
 
-## 1.0.2 - 2016-08-04
-**Added**
-- Switched build to webpack
+- New demos
+- Library documentation added to README
 
-## 1.0.3 - 2016-09-18
+**Changed**
+
+- destroy() method renamed to remove()
+
 **Fixed**
-- Iterable class list check that prevented classChange from working in IE.
+
+- toggle() force feature with IE10/11
+- Changing multiple class names with IE10/11
+
+## 0.0.3
+
+*2016-03-06*
+
+**Added**
+
+- Demo page
+- Specify elements using CSS selector with add/remove/toggle methods
+- Handle multiple elements being passed to add/remove/toggle methods
+
+## 0.0.2
+
+*2016-03-05*
+
+**Changed**
+
+- Switched to browserify and separate modules for each method
+
+## 0.0.1
+
+*2016-03-05*
+
+**Added**
+
+- Initial release

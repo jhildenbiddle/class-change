@@ -1,15 +1,12 @@
 // Modules
 // =============================================================================
-var add      = require('./add');
-var listener = require('./listener');
-var remove   = require('./remove');
-var toggle   = require('./toggle');
+import add      from './add.js';
+import attrs    from './attrs.js';
+import listener from './listener.js';
+import remove   from './remove.js';
+import toggle   from './toggle.js';
+
 
 // Exports
 // =============================================================================
-module.exports = {
-    add     : add,
-    listener: listener,
-    remove  : remove,
-    toggle  : toggle
-};
+export default { add, attrs, listener, remove, toggle };

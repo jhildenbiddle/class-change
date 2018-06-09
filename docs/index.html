@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="A flexible, lightweight, dependency-free micro-library that simplifies CSS class changes and events">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>class-change - A flexible, lightweight, dependency-free micro-library that simplifies CSS class changes and events</title>
+    <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple.css">
+    <style>
+        iframe[src*="buttons.github.io"] {
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app"></div>
+
+    <script>
+        window.$docsify = {
+            // GENERAL
+            // -----------------------------------------------------------------
+            name       : 'class-change',
+            repo       : 'https://github.com/jhildenbiddle/class-change',
+            coverpage  : 'coverpage.md',
+            homepage   : 'index.md',
+            loadSidebar: 'sidebar.md',
+
+            // NAVIGATION
+            // -----------------------------------------------------------------
+            alias: {
+                '.*?/changelog': 'https://unpkg.com/class-change/CHANGELOG.md',
+            },
+            auto2top   : true,
+            maxLevel   : 3,
+            subMaxLevel: 3,
+
+            // PLUGINS
+            // -----------------------------------------------------------------
+            executeScript: true,
+            ga         : 'UA-100100910-2',
+            search     : {
+                depth      : 3,
+                noData     : 'No results!',
+                placeholder: 'Search...'
+            }
+        };
+    </script>
+    <script src="https://unpkg.com/docsify/lib/docsify.min.js"></script>
+    <script src="https://unpkg.com/docsify-themeable"></script>
+    <script src="https://unpkg.com/docsify-copy-code"></script>
+    <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/external-script.min.js"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/ga.min.js"></script>
+    <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
+    <script src="https://unpkg.com/prismjs/components/prism-bash.min.js"></script>
+</body>
+</html>

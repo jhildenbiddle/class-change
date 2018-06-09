@@ -1,60 +1,55 @@
 // Modules
 // =============================================================================
-var classChange = {
-        add   : require('./add'),
-        remove: require('./remove')
-    };
-var util = require('./util');
+import add    from './add.js';
+import remove from './remove.js';
+import { elementsToArray, classNamesToArray } from './util.js';
+
+
+// Variables
+// =============================================================================
+const classChange = { add, remove };
+
+
+// Functions
+// =============================================================================
+/**
+ * Toggle class name(s) on target element(s)
+ *
+ * @param {(array|element|htmlcollection|nodelist|string)} target -
+ *   Element(s) to toggle class name(s) on
+ * @param {(array|function|string)} classNames - Array, space-separated list, or
+ *   function that returns array/string of class name(s)
+ * @param {boolean} [forceTrueFalse] - Force add when true, remove when false
+ * @returns {(array|element)} - Target(s)
+ */
+function toggleClass(target, classNames, forceTrueFalse) {
+    if (forceTrueFalse === true) {
+        return classChange.add(target, classNames);
+    }
+    else if (forceTrueFalse === false) {
+        return classChange.remove(target, classNames);
+    }
+    else {
+        const elms = elementsToArray(target);
+
+        elms.forEach(function(elm, i) {
+            const classArray = classNamesToArray(classNames instanceof Function ? classNames(elm, i) : classNames);
+
+            if (classArray && classArray.length) {
+                const elmClassArray   = elm.className.length ? elm.className.split(' ') : [];
+                const keepClassArray  = elmClassArray.filter(className => classArray.indexOf(className) === -1);
+                const newClassArray   = classArray.filter(className => elmClassArray.indexOf(className) === -1);
+                const finalClassArray = keepClassArray.concat(newClassArray);
+
+                elm.className = finalClassArray.join(' ');
+            }
+        });
+
+        return elms.length === 1 ? elms[0] : elms;
+    }
+}
+
 
 // Exports
 // =============================================================================
-module.exports = function(target, classNames, forceTrueFalse) {
-    elms = typeof target === 'string' ? document.querySelectorAll(target) : util.isIterableList(target) ? target : [target];
-    forceTrueFalse = forceTrueFalse || null;
-
-    function toggleClassNames(elm, classNames) {
-        // Convert to array and trim values
-        classNames = util.classNamesToArray(classNames);
-
-        if (classNames && classNames.length) {
-            // Native
-            if (elm.classList) {
-                classNames.forEach(function(className) {
-                    if (forceTrueFalse === true) {
-                        elm.classList.add(className);
-                    }
-                    else if (forceTrueFalse === false) {
-                        elm.classList.remove(className);
-                    }
-                    else {
-                        elm.classList.toggle(className);
-                    }
-                });
-            }
-            // Legacy
-            else {
-                var elmClasses = elm.className.split(' ');
-
-                classNames.forEach(function(className) {
-                    if (forceTrueFalse === false || (forceTrueFalse === null && elmClasses.indexOf(className) > -1)) {
-                        classChange.remove(elm, className);
-                    }
-                    else if (forceTrueFalse === true || (forceTrueFalse === null && elmClasses.indexOf(className) === -1)) {
-                        classChange.add(elm, className);
-                    }
-                });
-            }
-        }
-    }
-
-    for (var i = 0, len = elms.length; i < len; i++) {
-        if (classNames instanceof Function) {
-            toggleClassNames(elms[i], classNames(elms[i], i));
-        }
-        else {
-            toggleClassNames(elms[i], classNames);
-        }
-    }
-
-    return elms.length === 1 ? elms[0] : elms;
-};
+export default toggleClass;
