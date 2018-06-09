@@ -8,7 +8,7 @@
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&hashtags=css,developers,frontend,javascript)
 <a class="github-button" href="https://github.com/jhildenbiddle/class-change" data-icon="octicon-star" data-show-count="true" aria-label="Star jhildenbiddle/class-change on GitHub">Star</a>
 
-A small, dependency-free [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) alternative for manipulating CSS class names and creating declarative class-related event listeners.
+A small, dependency-free micro-library for manipulating CSS class names and creating declarative class-related event listeners.
 
 ## Features
 

@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "description": "A small, dependency-free Element.classList alternative for manipulating CSS class names and creating declarative class-related event listeners",
+  "description": "A small, dependency-free micro-library for manipulating CSS class names and creating declarative class-related event listeners",
   "main": "dist/class-change.js",
   "authors": [
     "John Hildenbiddle (http://hildenbiddle.com)"
