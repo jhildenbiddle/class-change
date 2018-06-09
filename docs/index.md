@@ -22,7 +22,7 @@ A small, dependency-free micro-library for manipulating CSS class names and crea
 
 **What about Element.classList?**
 
-[Element.classList](https://developer.mozilla.org/en/DOM/element.classList) already provides an API for manipulating CSS class names, but [some browsers](http://caniuse.com/#feat=classlist) suffer from incomplete implementations or lack support entirely. [Polyfills](https://github.com/eligrey/classList.js/) are available that add classList support to older browsers, but neither polyfills nor native classList methods offer the convenience features provided by this library because these features are not part of the official Element.classList specification.
+[Element.classList](https://developer.mozilla.org/en/DOM/element.classList) provides an API for adding, removing, and toggling CSS class names, but [some browsers](http://caniuse.com/#feat=classlist) suffer from incomplete implementations or lack support entirely. [Polyfills](https://github.com/eligrey/classList.js/) are available that add classList support to older browsers, but neither polyfills nor native classList methods offer the convenience features provided by this library because these features are not part of the official Element.classList specification.
 
 ## Installation
 
@@ -57,6 +57,63 @@ CDN ([unpkg.com](https://unpkg.com/) shown, also on [jsdelivr.net](https://www.j
   import classChange from 'https://unpkg.com/class-change@2/dist/class-change.esm.min.js';
   // ...
 </script>
+```
+
+## Examples
+
+**Basic usage**
+
+```javascript
+// Add "foo" and "bar" class names to all <p> elements
+classChange.add('p', 'foo bar');
+
+// Remove "foo" and "bar" class names from all <p> elements
+classChange.remove(document.querySelectorAll('p'), ['foo','bar']);
+
+// Toggle "foo" and "bar" class names on all <p> elements
+classChange.toggle('p', 'foo bar');
+classChange.toggle('p', 'foo bar', true);  // => Force add
+classChange.toggle('p', 'foo bar', false); // => Force remove
+```
+
+**Data Attributes**
+
+```javascript
+// Initialize the default attribute listener
+classChange.attrs();
+```
+
+```html
+<!-- Add "foo" and "bar" classes to this element -->
+<button data-class-add="foo bar">Button</button>
+
+<!--
+	Specify elements for each change type (add, remove, toggle)
+	- Add "foo" class to element with id="test1"
+	- Remove "bar" class from closest <span> ancestor
+	- Toggle "baz" class on all <div> ancestors
+-->
+<button data-class-add="foo"
+        data-class-add-target="#test1"
+        data-class-remove="bar"
+        data-class-remove-closest="span"
+        data-class-toggle="baz"
+        data-class-toggle-parents="div">Button</button>
+```
+
+**Event Listeners**
+
+```javascript
+// Add class change event listener
+var myListener = classChange.listener({
+  target: document.body, // Add an event listener to the document.body (default)
+  event : 'click',       // Listen for "click" events (default)
+  match : 'button',      // If the clicked element is a <button>
+  change: 'p',           // Apply class changes to all <p> elements:
+  add   : 'foo',         // 1. Add the "foo" class name
+  remove: 'bar',         // 2. Remove the "bar" class name
+  toggle: 'baz buzz'     // 3. Toggle the "baz" and "buzz" class names
+});
 ```
 
 ## Methods
@@ -167,7 +224,7 @@ Object containing a `remove()` method
 The default attribute listener will handle clicks events on any element with a  `data-class` attribute.
 
 ```javascript
-// Initialize default listener.
+// Initialize default listener
 classChange.attrs();
 
 // Remove default listener
