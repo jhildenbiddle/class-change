@@ -1,7 +1,7 @@
 /*!
  * class-change
  * v1.0.3
- * https://github.com/jhildenbiddle/class-change
+ * https://jhildenbiddle.github.io/class-change
  * (c) 2018 John Hildenbiddle <http://hildenbiddle.com>
  * MIT license
  */

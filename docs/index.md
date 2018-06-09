@@ -8,25 +8,17 @@
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&hashtags=css,developers,frontend,javascript)
 <a class="github-button" href="https://github.com/jhildenbiddle/class-change" data-icon="octicon-star" data-show-count="true" aria-label="Star jhildenbiddle/class-change on GitHub">Star</a>
 
-A flexible, lightweight, and dependency-free alternative to the [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) API typically used to add, remove, and toggle CSS class names. It simplifies CSS class changes in modern and legacy browsers while requiring less code to write, test, and maintain.
+A small, dependency-free [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) alternative for manipulating CSS class names and creating declarative class-related event listeners.
 
 ## Features
 
-- [Add](#add), [remove](#remove), and [toggle](#toggle) class names on multiple elements
-- Trigger class changes using only [HTML data attributes](#attrs)
+- [Add](#add), [remove](#remove), and [toggle](#toggle) class names using Arrays, CSS Selectors, Elements and Nodes
+- Trigger class changes using [HTML data attributes](#attrs)
 - Create [declarative event listeners](#listener) to handle class change events
-- Specify elements using CSS selectors, Arrays, HTMLCollections, and NodeLists
-- Specify class names using Arrays and space-separated Strings
-- UMD module for browsers and AMD/CommonJS environments
-- ES module for modern browsers and ES2015/ES6+ environments
-- Lightweight (1.7k minified + gzipped) and dependency-free
+- Consistent and reliable interface for modern and legacy browsers (IE9+)
+- UMD and ES6 modules available
 - Rigorously tested with 100% code coverage
-
-**Browser Support**
-
-| IE   | Edge | Chrome | Firefox | Safari |
-| ---- | ---- | ------ | ------- | ------ |
-| 9+   | 12+  | 19+    | 6+      | 6+     |
+- Lightweight (1.6k min+gzip) and dependency-free
 
 ## Installation
 
@@ -273,23 +265,32 @@ classChange.listener(options);
   - Boolean `true`  is equivalent to *event.target*, while `false` will exit
   - Strings are expected to be a valid [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
   - Functions...
-    - Receive the following argument: *eventObject*
     - Should return any other accepted value/type
+    - Receive the following argument:
+      1. **eventObject**: The event object
 - **change**: The elements that will have class changes applied to them.
   - Default: `true` (equivalent to *event.target*)
   - Accepts: Array, Boolean, Element, HTMLCollection, NodeList, String, or Function
   - Boolean `true`  is equivalent to *event.target*, while `false` will exit
   - Strings are expected to be a valid [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
   - Functions...
-    - Receives the following arguments: *eventObject*, *matchedElement*, *matchedElementIndex*
     - Should return any other accepted value/type
+    - Receive the following arguments:
+      1. **eventObject**: The event object
+      1. **matchedElm**: The matched element
+      1. **matchedElmIndex**: The index of the `matchedElm` in the `options.match` collection
 - **add**: A list of class names to add to the `change` elements.
   - Accepts: Array, Element, HTMLCollection, NodeList, String, or Function
   - Strings are expected to be a valid [CSS selector](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors)
   - Functions...
     - Are called once for each `change` element
-    - Receives the following arguments: *eventObject*, *matchedElement*, *matchedElementIndex*, *changeElement*, *changeElementIndex*
     - Should return any other accepted value/type
+    - Receive the following arguments:
+      1. **eventObj**: The event object
+      1. **matchedElm**: The matched element
+      1. **matchedElmIndex**: The index of the `matchedElm` in the `options.match` collection
+      1. **changeElm**: The element class changes are being applied to
+      1. **changeElmIndex**: The index of the `changeElm` in the `options.change` collection
 - **remove**: A list of class names to remove from the `change` elements.
   - (Same as **add**...)
 - **toggle**: A list of class names to toggle on the `change` elements.
@@ -323,10 +324,6 @@ myListener.remove();
 
 A `match` function allows dynamically generating the match criteria each time an event occurs. For example, you may want to only match elements based on the state of your application.
 
-The following arguments are passed to the function:
-
-1. **eventObject**: The event object
-
 ```javascript
 // Application state
 var myAppState = 'ok';
@@ -349,12 +346,6 @@ var myListener = classChange.listener({
 
 A `change` function allows dynamically generating the elements to apply class changes to each time an event occurs. For example, you may want to listen for click events on a button, but then change class names on the button's parent element.
 
-The following arguments are passed to the function:
-
-1. **eventObject**: The event object
-2. **matchedElm**: The matched element
-3. **matchedElmIndex**: The index of the `matchedElm` in the `options.match` collection
-
 ```javascript
 // Add listener
 var myListener = classChange.listener({
@@ -372,14 +363,6 @@ var myListener = classChange.listener({
 **Example 4: `add|remove|toggle` Functions**
 
 An `add|remove|toggle` function allows dynamically generating a list of class names to add, remove or toggle each time an event occurs. For example, you may want specify class names based on existing class names, or generate class names based on an element index.
-
-The following arguments are passed to these functions:
-
-1. **eventObj**: The event object
-2. **matchedElm**: The matched element
-3. **matchedElmIndex**: The index of the `matchedElm` in the `options.match` collection
-4. **changeElm**: The element class changes are being applied to
-5. **changeElmIndex**: The index of the `changeElm` in the `options.change` collection
 
 ```javascript
 var myListener = classChange.listener({

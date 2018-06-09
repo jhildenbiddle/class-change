@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/jhildenbiddle/class-change/blob/master/LICENSE)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&hashtags=css,developers,frontend,javascript)
 
-A flexible, lightweight, and dependency-free alternative to the [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) API typically used to add, remove, and toggle CSS class names. It simplifies CSS class changes in modern and legacy browsers while requiring less code to write, test, and maintain.
+A small, dependency-free [Element.classList](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList) alternative for manipulating CSS class names and creating declarative class-related event listeners.
 
 - [Homepage](https://jhildenbiddle.github.io/class-change) - Documentation and usage examples
 
