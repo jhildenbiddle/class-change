@@ -20,6 +20,10 @@ A small, dependency-free micro-library for manipulating CSS class names and crea
 - Rigorously tested with 100% code coverage
 - Lightweight (1.6k min+gzip) and dependency-free
 
+**What about Element.classList?**
+
+[Element.classList](https://developer.mozilla.org/en/DOM/element.classList) already provides an API for manipulating CSS class names, but [some browsers](http://caniuse.com/#feat=classlist) suffer from incomplete implementations or lack support entirely. [Polyfills](https://github.com/eligrey/classList.js/) are available that add classList support to older browsers, but neither polyfills nor native classList methods offer the convenience features provided by this library because these features are not part of the official Element.classList specification.
+
 ## Installation
 
 NPM:
