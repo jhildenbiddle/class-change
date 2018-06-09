@@ -1,12 +1,14 @@
 # Change Log
 
-## 2.0.0
+## 1.1.0
 
 *2018-06-09*
 
-**Breaking changes from 1.x**
+**Added**
 
-- ???
+- Added attrs() method, allowing class changes to be triggered using HTML
+  data attributes.
+- Added automated tests
 
 ## 1.0.3
 
