@@ -8,21 +8,26 @@
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&hashtags=css,developers,frontend,javascript)
 <a class="github-button" href="https://github.com/jhildenbiddle/class-change" data-icon="octicon-star" data-show-count="true" aria-label="Star jhildenbiddle/class-change on GitHub">Star</a>
 
-A small, dependency-free micro-library for manipulating CSS class names and creating declarative class-related event listeners.
+A micro-library for manipulating CSS class names, triggering change events using HTML data attributes, and creating declarative class-related event listeners.
+
+## Description
+
+CSS class names change. A lot.
+
+Yet the native methods for manipulating CSS class names remain rudimentary. [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) provides a basic API for working with classes, but [some browsers](http://caniuse.com/#feat=classlist) suffer from an incomplete implementation (or lack support entirely), changes can only be applied to a single element, and separate event listeners must be created for each change event. The result is often polyfills or patches for legacy browsers, manual loops for applying changes to multiple elements, repeated boilerplate code for handling delegated events, and performance issues caused by a high volume of event listeners.
+
+This micro-library aims to address these issues by providing a versatile classList alternative for modern and legacy browsers while reducing and simplifying the code required for class change events.
+
 
 ## Features
 
-- [Add](#add), [remove](#remove), and [toggle](#toggle) class names using Arrays, CSS Selectors, Elements and Nodes
+- [Add](#add), [remove](#remove), and [toggle](#toggle) class names using Arrays, CSS Selectors, HTMLCollections, and NodeLists
 - Trigger class changes using [HTML data attributes](#attrs)
 - Create [declarative event listeners](#listener) to handle class change events
-- Consistent and reliable interface for modern and legacy browsers (IE9+)
+- Legacy browser support (IE9+)
 - UMD and ES6 modules available
 - Rigorously tested with 100% code coverage
 - Lightweight (1.6k min+gzip) and dependency-free
-
-**What about Element.classList?**
-
-[Element.classList](https://developer.mozilla.org/en/DOM/element.classList) provides an API for adding, removing, and toggling CSS class names, but [some browsers](http://caniuse.com/#feat=classlist) suffer from incomplete implementations or lack support entirely. [Polyfills](https://github.com/eligrey/classList.js/) are available that add classList support to older browsers, but neither polyfills nor native classList methods offer the convenience features provided by this library because these features are not part of the official Element.classList specification.
 
 ## Installation
 
@@ -47,14 +52,14 @@ bower install class-change
 CDN ([unpkg.com](https://unpkg.com/) shown, also on [jsdelivr.net](https://www.jsdelivr.com/)):
 
 ```html
-<!-- ES5 in file.html (latest v2.x.x) -->
-<script src="https://unpkg.com/class-change@2"></script>
+<!-- ES5 in file.html (latest v1.x.x) -->
+<script src="https://unpkg.com/class-change@1"></script>
 ```
 
 ```html
-<!-- ES6 module in file.html (latest v2.x.x) -->
+<!-- ES6 module in file.html (latest v1.x.x) -->
 <script type="module">
-  import classChange from 'https://unpkg.com/class-change@2/dist/class-change.esm.min.js';
+  import classChange from 'https://unpkg.com/class-change@1/dist/class-change.esm.min.js';
   // ...
 </script>
 ```
@@ -86,6 +91,9 @@ classChange.attrs();
 ```html
 <!-- Add "foo" and "bar" classes to this element -->
 <button data-class-add="foo bar">Button</button>
+
+<!-- Add "foo" and "bar" classes to all <div> elements -->
+<button data-class-add="foo bar" data-class-target="div">Button</button>
 
 <!--
 	Specify elements for each change type (add, remove, toggle)

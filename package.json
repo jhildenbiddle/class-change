@@ -1,7 +1,7 @@
 {
   "name": "class-change",
   "version": "1.1.1",
-  "description": "A small, dependency-free micro-library for manipulating CSS class names and creating declarative class-related event listeners",
+  "description": "A micro-library for manipulating CSS class names, triggering change events using HTML data attributes, and creating declarative class-related event listeners",
   "author": "John Hildenbiddle <http://hildenbiddle.com>",
   "license": "MIT",
   "homepage": "https://jhildenbiddle.github.io/class-change",
