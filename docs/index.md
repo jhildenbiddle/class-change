@@ -16,7 +16,7 @@ CSS class names change. A lot.
 
 Yet the native methods for manipulating CSS class names remain rudimentary. [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) provides a basic API for working with classes, but [some browsers](http://caniuse.com/#feat=classlist) suffer from an incomplete implementation (or lack support entirely), changes can only be applied to a single element, and separate event listeners must be created for each change event. The result is often polyfills or patches for legacy browsers, manual loops for applying changes to multiple elements, repeated boilerplate code for handling delegated events, and performance issues caused by a high volume of event listeners.
 
-This micro-library aims to address these issues by providing a versatile classList alternative for modern and legacy browsers while reducing and simplifying the code required for class change events.
+This micro-library aims to address these issues by providing a versatile classList alternative and simplifying the code required for handling CSS class change events.
 
 
 ## Features
