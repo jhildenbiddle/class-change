@@ -166,12 +166,12 @@ function handleAttrEvent(evt) {
         if (hasAttr) {
             var changeTasks = {};
             methods.forEach(function(method) {
-                var classNames = elm.getAttribute("data-class-" + method);
+                var classNames = elm.getAttribute("data-class-".concat(method));
                 if (classNames && classNames.length) {
-                    var closestAttr = elm.getAttribute("data-class-" + method + "-closest") || elm.getAttribute("data-class-closest");
-                    var parentsAttr = elm.getAttribute("data-class-" + method + "-parents") || elm.getAttribute("data-class-parents");
-                    var siblingsAttr = elm.getAttribute("data-class-" + method + "-siblings") || elm.getAttribute("data-class-siblings");
-                    var targetAttr = elm.getAttribute("data-class-" + method + "-target") || elm.getAttribute("data-class-target");
+                    var closestAttr = elm.getAttribute("data-class-".concat(method, "-closest")) || elm.getAttribute("data-class-closest");
+                    var parentsAttr = elm.getAttribute("data-class-".concat(method, "-parents")) || elm.getAttribute("data-class-parents");
+                    var siblingsAttr = elm.getAttribute("data-class-".concat(method, "-siblings")) || elm.getAttribute("data-class-siblings");
+                    var targetAttr = elm.getAttribute("data-class-".concat(method, "-target")) || elm.getAttribute("data-class-target");
                     var changeElms = [];
                     if (closestAttr) {
                         var _elms = getClosest(elm, closestAttr);
@@ -210,11 +210,18 @@ function handleAttrEvent(evt) {
     });
 }
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function(obj) {
-    return typeof obj;
-} : function(obj) {
-    return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
+function _typeof(obj) {
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+        _typeof = function(obj) {
+            return typeof obj;
+        };
+    } else {
+        _typeof = function(obj) {
+            return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+        };
+    }
+    return _typeof(obj);
+}
 
 var classChange$2 = {
     add: addClass,
@@ -249,7 +256,7 @@ function addChangeListener(options) {
 
 function handleChangeEvent(evt, settings) {
     var matchElms = settings.match instanceof Function ? settings.match(evt) : settings.match;
-    var matchedElm = void 0;
+    var matchedElm;
     if (matchElms === true) {
         matchElms = [ evt.target ];
         matchedElm = evt.target;
@@ -259,7 +266,7 @@ function handleChangeEvent(evt, settings) {
             return matchesSelector(elm, matchElms);
         })[0] || null;
         matchElms = elementsToArray(matchElms);
-    } else if ((typeof matchElms === "undefined" ? "undefined" : _typeof(matchElms)) === "object") {
+    } else if (_typeof(matchElms) === "object") {
         var _isMatch = evt.target === matchElms;
         matchElms = elementsToArray(matchElms);
         matchedElm = _isMatch ? evt.target : matchElms[matchElms.indexOf(evt.target)] || getParents(evt.target).filter(function(elm) {

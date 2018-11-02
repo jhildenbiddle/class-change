@@ -2,14 +2,14 @@
 // =============================================================================
 const path = require('path');
 
-import babel    from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
-import eslint   from 'rollup-plugin-eslint';
-import json     from 'rollup-plugin-json';
-import merge    from 'lodash.merge';
-import pkg      from './package.json';
-import resolve  from 'rollup-plugin-node-resolve';
-import uglify   from 'rollup-plugin-uglify';
+import babel      from 'rollup-plugin-babel';
+import commonjs   from 'rollup-plugin-commonjs';
+import { eslint } from 'rollup-plugin-eslint';
+import json       from 'rollup-plugin-json';
+import merge      from 'lodash.merge';
+import pkg        from './package.json';
+import resolve    from 'rollup-plugin-node-resolve';
+import { terser } from 'rollup-plugin-terser';
 
 
 // Settings
@@ -38,18 +38,15 @@ const pluginSettings = {
     babel: {
         exclude: ['node_modules/**'],
         presets: [
-            ['env', {
+            ['@babel/env', {
                 modules: false,
                 targets: {
                     browsers: ['ie >= 9']
                 }
             }]
-        ],
-        plugins: [
-            'external-helpers'
         ]
     },
-    uglify: {
+    terser: {
         beautify: {
             compress: false,
             mangle  : false,
@@ -101,7 +98,7 @@ const esm = merge({}, config, {
         format: 'esm'
     },
     plugins: [
-        uglify(pluginSettings.uglify.beautify)
+        terser(pluginSettings.terser.beautify)
     ]
 });
 
@@ -112,7 +109,7 @@ const esmMinified = merge({}, config, {
         format: esm.output.format
     },
     plugins: [
-        uglify(pluginSettings.uglify.minify)
+        terser(pluginSettings.terser.minify)
     ]
 });
 
@@ -122,7 +119,7 @@ const umd = merge({}, config, {
         format: 'umd'
     },
     plugins: [
-        uglify(pluginSettings.uglify.beautify)
+        terser(pluginSettings.terser.beautify)
     ]
 });
 
@@ -133,7 +130,7 @@ const umdMinified = merge({}, config, {
         format: umd.output.format
     },
     plugins: [
-        uglify(pluginSettings.uglify.minify)
+        terser(pluginSettings.terser.minify)
     ]
 });
 

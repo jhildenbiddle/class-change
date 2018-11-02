@@ -40,7 +40,7 @@ const localConfig = {
                             loader: 'babel-loader',
                             options: {
                                 presets: [
-                                    ['env', {
+                                    ['@babel/env', {
                                         targets: {
                                             browsers: ['ie >= 9']
                                         }
