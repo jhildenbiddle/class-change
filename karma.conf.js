@@ -91,46 +91,46 @@ const remoteConfig = Object.assign({}, localConfig, {
     // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
     customLaunchers: {
         sl_chrome: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'chrome',
-            platform: 'Windows 7',
-            version: '26'
+            platform   : 'Windows 7',
+            version    : '26'
         },
         sl_edge: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'MicrosoftEdge',
-            platform: 'Windows 10',
-            version: '13.10586'
+            platform   : 'Windows 10',
+            version    : '13.10586'
         },
         sl_firefox: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'firefox',
-            platform: 'Windows 7',
-            version: '30'
+            platform   : 'Windows 7',
+            version    : '30'
         },
         sl_ie_11: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '11.0'
+            platform   : 'Windows 7',
+            version    : '11.0'
         },
         sl_ie_10: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '10.0'
+            platform   : 'Windows 7',
+            version    : '10.0'
         },
         sl_ie_9: {
-            base: 'SauceLabs',
+            base       : 'SauceLabs',
             browserName: 'internet explorer',
-            platform: 'Windows 7',
-            version: '9.0'
+            platform   : 'Windows 7',
+            version    : '9.0'
         },
         sl_safari: {
-            base: 'SauceLabs',
-            browserName: 'safari',
-            platform: 'OS X 10.9',
-            version: '7.0'
+            base       : 'SauceLabs',
+            browserName: 'Safari',
+            platform   : 'OS X 10.10',
+            version    : '8.0'
         }
     },
     // Set browsers to all customLaunchers
