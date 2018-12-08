@@ -19,7 +19,7 @@ const localConfig = {
     // https://www.npmjs.com/search?q=karma+launcher
     browsers: ['ChromeHeadless'],
     files: [
-        'node_modules/babel-polyfill/dist/polyfill.js',
+        'node_modules/@babel/polyfill/dist/polyfill.js',
         files.test
     ],
     preprocessors: {
