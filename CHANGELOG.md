@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.1.4
+
+*2018-12-07*
+
+- Update dependencies
+- Fix website landscape display on notched devices
+- Fix rollup plugin configuration
+
 ## 1.1.3
 
 *2018-06-11*
@@ -115,7 +123,5 @@
 ## 0.0.1
 
 *2016-03-05*
-
-**Added**
 
 - Initial release
