@@ -118,9 +118,9 @@ const umd = merge({}, config, {
     output: {
         format: 'umd'
     },
-    plugins: [
+    plugins: config.plugins.concat([
         terser(pluginSettings.terser.beautify)
-    ]
+    ])
 });
 
 // UMD (Minified)
@@ -129,9 +129,9 @@ const umdMinified = merge({}, config, {
         file  : umd.output.file.replace(/\.js$/, '.min.js'),
         format: umd.output.format
     },
-    plugins: [
+    plugins: config.plugins.concat([
         terser(pluginSettings.terser.minify)
-    ]
+    ])
 });
 
 
