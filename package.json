@@ -41,8 +41,7 @@
     "test": "karma start",
     "test-watch": "npm test -- --auto-watch --no-single-run",
     "test-remote": "npm test -- --remote",
-    "version": "npm run prepare && git add -A dist",
-    "preversion": "npm test",
+    "version": "npm run prepare && npm test && git add -A dist",
     "watch": "run-p 'build -- -w'"
   },
   "devDependencies": {
