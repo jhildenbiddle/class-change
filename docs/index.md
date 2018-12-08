@@ -49,7 +49,7 @@ Bower:
 bower install class-change
 ```
 
-CDN ([unpkg.com](https://unpkg.com/) shown, also on [jsdelivr.net](https://www.jsdelivr.com/)):
+CDN ([unpkg.com](https://unpkg.com/) shown, also on [jsdelivr.com](https://www.jsdelivr.com/package/npm/class-change)):
 
 ```html
 <!-- ES5 in file.html (latest v1.x.x) -->
@@ -602,4 +602,5 @@ This project is licensed under the MIT License. See the [LICENSE](https://github
 Copyright (c) 2016 John Hildenbiddle ([@jhildenbiddle](https://twitter.com/jhildenbiddle))
 
 <!-- GitHub Buttons -->
+
 <script async defer src="https://buttons.github.io/buttons.js"></script>
