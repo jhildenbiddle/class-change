@@ -2,7 +2,7 @@
  * class-change
  * v1.1.4
  * https://jhildenbiddle.github.io/class-change
- * (c) 2018 John Hildenbiddle <http://hildenbiddle.com>
+ * (c) 2018-2019 John Hildenbiddle <http://hildenbiddle.com>
  * MIT license
  */
 function classNamesToArray(classNames) {

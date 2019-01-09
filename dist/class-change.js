@@ -2,11 +2,12 @@
  * class-change
  * v1.1.4
  * https://jhildenbiddle.github.io/class-change
- * (c) 2018 John Hildenbiddle <http://hildenbiddle.com>
+ * (c) 2018-2019 John Hildenbiddle <http://hildenbiddle.com>
  * MIT license
  */
 (function(global, factory) {
-    typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : global.classChange = factory();
+    typeof exports === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global = global || self, 
+    global.classChange = factory());
 })(this, function() {
     "use strict";
     function classNamesToArray(classNames) {
