@@ -8,7 +8,7 @@
     <meta name="description" content="A versatile Element.classList alternative for manipulating CSS class names, triggering change events using HTML data attributes, and creating class-related event listeners using a simple, declarative API.">
     <title>class-change - A versatile Element.classList alternative for manipulating CSS class names, triggering change events using HTML data attributes, and creating class-related event listeners using a simple, declarative API</title>
 
-    <link rel="stylesheet" href="https://unpkg.com/docsify-themeable/dist/css/theme-simple.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable/dist/css/theme-simple.css">
     <style>
         iframe[src*="buttons.github.io"] {
             margin: 0;
@@ -23,6 +23,8 @@
     <script>
         // Sentry.io
         Sentry.init({ dsn: 'https://b783a168ac7049c4925ee9ff1aad4e87@sentry.io/1367215' });
+
+        // Docsify
         window.$docsify = {
             // GENERAL
             // -----------------------------------------------------------------
@@ -34,7 +36,7 @@
             // NAVIGATION
             // -----------------------------------------------------------------
             alias: {
-                '.*?/changelog': 'https://unpkg.com/class-change/CHANGELOG.md',
+                '.*?/changelog': 'https://cdn.jsdelivr.net/npm/class-change/CHANGELOG.md',
             },
             auto2top   : true,
             maxLevel   : 3,
@@ -51,13 +53,13 @@
             }
         };
     </script>
-    <script src="https://unpkg.com/docsify"></script>
-    <script src="https://unpkg.com/docsify-themeable"></script>
-    <script src="https://unpkg.com/docsify-copy-code"></script>
-    <script src="https://unpkg.com/docsify-pagination/dist/docsify-pagination.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/external-script.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/ga.min.js"></script>
-    <script src="https://unpkg.com/docsify/lib/plugins/search.js"></script>
-    <script src="https://unpkg.com/prismjs/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/external-script.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/ga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
 </html>
