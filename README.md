@@ -11,19 +11,11 @@ A versatile [Element.classList](https://developer.mozilla.org/en/DOM/element.cla
 
 - [Homepage](https://jhildenbiddle.github.io/class-change) - Documentation and usage examples
 
-## Description
-
-CSS class names change. A lot.
-
-Yet the native methods for manipulating CSS class names remain rudimentary. [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) provides a basic API for working with classes, but [some browsers](http://caniuse.com/#feat=classlist) suffer from an incomplete implementation (or lack support entirely), changes can only be applied to a single element, and separate event listeners must be created for each change event. The result is often polyfills or patches for legacy browsers, manual loops for applying changes to multiple elements, repeated boilerplate code for handling delegated events, and performance issues caused by a high volume of event listeners.
-
-This micro-library aims to address these issues by reducing and simplifying the code required for CSS class changes and events.
-
 ## Contact & Support
 
 - Create a [Github issue](https://github.com/jhildenbiddle/class-change/issues) for bug reports, feature requests, or questions
 - Follow [@jhildenbiddle](https://twitter.com/jhildenbiddle) for announcements
-- Add a [star on GitHub](https://github.com/jhildenbiddle/class-change) or [tweet](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&via=jhildenbiddle&hashtags=css,developers,frontend,javascript) to support the project!
+- Add a ⭐️ [star on GitHub](https://github.com/jhildenbiddle/class-change) or ❤️ [tweet](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&via=jhildenbiddle&hashtags=css,developers,frontend,javascript) to support the project!
 
 ## License
 
