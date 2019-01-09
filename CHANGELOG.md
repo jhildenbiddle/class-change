@@ -1,5 +1,13 @@
 # Change Log
 
+## 1.1.5
+
+*2019-01-08*
+
+- Update dependencies
+- Update unit test configuration (Karma+Travis)
+- Update CDN links (switch from unpkg to jsdelivr)
+
 ## 1.1.4
 
 *2018-12-07*
