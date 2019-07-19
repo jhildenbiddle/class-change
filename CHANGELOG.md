@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.1.6
+
+*2019-07-19*
+
+- Update dependencies
+- Switch to `mocha/recommended` ESLint rules
+
 ## 1.1.5
 
 *2019-01-08*
