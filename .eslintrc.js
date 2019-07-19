@@ -7,8 +7,8 @@ module.exports = {
         "node": true
     },
     "extends": [
-        "eslint:recommended"
-        // "plugin:mocha/recommended"
+        "eslint:recommended",
+        "plugin:mocha/recommended"
     ],
     "parserOptions": {
         "sourceType": "module"
@@ -44,9 +44,8 @@ module.exports = {
         "quotes"                     : ["error", "single"],
         "semi"                       : ["error", "always"],
 
-        "mocha/no-exclusive-tests"   : ["warn"],
-        "mocha/no-global-tests"      : ["error"],
-        "mocha/no-identical-title"   : ["error"],
-        "mocha/no-mocha-arrows"      : ["error"]
+        "mocha/no-hooks-for-single-case": ["off"],
+        "mocha/no-top-level-hooks"      : ["off"],
+        "mocha/no-setup-in-describe"    : ["off"]
     }
 };
