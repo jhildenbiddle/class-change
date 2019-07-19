@@ -6,7 +6,10 @@ module.exports = {
         "mocha": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": [
+        "eslint:recommended"
+        // "plugin:mocha/recommended"
+    ],
     "parserOptions": {
         "sourceType": "module"
     },
