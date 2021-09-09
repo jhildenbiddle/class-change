@@ -1,9 +1,9 @@
 # class-change.js
 
 [![NPM](https://img.shields.io/npm/v/class-change.svg?style=flat-square)](https://www.npmjs.com/package/class-change)
-[![Build Status](https://img.shields.io/travis/jhildenbiddle/class-change.svg?style=flat-square)](https://travis-ci.org/jhildenbiddle/class-change)
-[![Codacy](https://img.shields.io/codacy/grade/ed39ed7fd6d842c1b2b13d20030d34f1.svg?style=flat-square)](https://www.codacy.com/app/jhildenbiddle/class-change?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jhildenbiddle/class-change&amp;utm_campaign=Badge_Grade)
-[![Codecov](https://img.shields.io/codecov/c/github/jhildenbiddle/class-change.svg?style=flat-square)](https://codecov.io/gh/jhildenbiddle/class-change)
+[![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/jhildenbiddle/class-change/Build%20&%20Test/master?label=checks&style=flat-square)](https://github.com/jhildenbiddle/get-css-data/actions?query=branch%3Amaster+)
+[![Codacy code quality](https://img.shields.io/codacy/grade/d656ba140a6e488ab9db2f33183f760e/master?style=flat-square)](https://app.codacy.com/gh/jhildenbiddle/class-change/dashboard?branch=master)
+[![Codacy branch coverage](https://img.shields.io/codacy/coverage/d656ba140a6e488ab9db2f33183f760e/master?style=flat-square)](https://app.codacy.com/gh/jhildenbiddle/class-change/dashboard?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/jhildenbiddle/class-change/blob/master/LICENSE)
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?url=https%3A%2F%2Fgithub.com%2Fjhildenbiddle%2Fclass-change&hashtags=css,developers,frontend,javascript)
 <a class="github-button" href="https://github.com/jhildenbiddle/class-change" data-icon="octicon-star" data-show-count="true" aria-label="Star jhildenbiddle/class-change on GitHub">Star</a>
