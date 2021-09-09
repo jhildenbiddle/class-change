@@ -11,6 +11,16 @@ A versatile [Element.classList](https://developer.mozilla.org/en/DOM/element.cla
 
 - [Homepage](https://jhildenbiddle.github.io/class-change) - Documentation and usage examples
 
+## Features
+
+- Apply class changes to Arrays, CSS Selectors, HTMLCollections, and NodeLists
+- Trigger class changes using [HTML data attributes](#attrs)
+- Create [class-related event listeners](#listener) using a simple, declarative API
+- Legacy browser support (IE9+)
+- UMD and ES6 modules available
+- Rigorously tested with 100% code coverage
+- Lightweight (1.6k min+gzip) and dependency-free
+
 ## Contact & Support
 
 - Create a [Github issue](https://github.com/jhildenbiddle/class-change/issues) for bug reports, feature requests, or questions

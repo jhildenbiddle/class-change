@@ -20,7 +20,6 @@ This micro-library aims to address these issues by reducing and simplifying the 
 
 ## Features
 
-- [Add](#add), [remove](#remove), and [toggle](#toggle) class names
 - Apply class changes to Arrays, CSS Selectors, HTMLCollections, and NodeLists
 - Trigger class changes using [HTML data attributes](#attrs)
 - Create [class-related event listeners](#listener) using a simple, declarative API
