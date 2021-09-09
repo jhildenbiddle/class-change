@@ -1,13 +1,20 @@
 // Dependencies
 // =============================================================================
-const pkg       = require('./package');
-const saucelabs = require('./saucelabs.config');
+const fs           = require('fs');
+const pkg          = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
+const { execSync } = require('child_process');
 
 
 // Variables
 // =============================================================================
 const files = {
     test: './tests/**/*.test.js'
+};
+const gitInfo = {
+    branch   : execSync('git rev-parse --abbrev-ref HEAD').toString().trim(),
+    commitMsg: execSync('git log -1 --pretty=%B').toString().trim(),
+    isClean  : Boolean(execSync('[[ -n $(git status -s) ]] || echo "clean"').toString().trim()),
+    isDirty  : Boolean(execSync('[[ -z $(git status -s) ]] || echo "dirty"').toString().trim())
 };
 
 
@@ -22,7 +29,7 @@ const settings = {
         [files.test]: ['eslint', 'webpack', 'sourcemap']
     },
     frameworks: ['mocha', 'chai'],
-    reporters : ['mocha', 'coverage-istanbul'],
+    reporters : ['mocha', 'coverage-istanbul'], // 'Browserstack' added below
     webpack: {
         mode  : 'development',
         module: {
@@ -34,16 +41,7 @@ const settings = {
                         {
                             loader : 'babel-loader',
                             options: {
-                                presets: [
-                                    [
-                                        '@babel/env',
-                                        {
-                                            targets: {
-                                                browsers: ['ie >= 9']
-                                            }
-                                        }
-                                    ]
-                                ],
+                                // See .babelrc
                                 plugins: [
                                     ['istanbul', { exclude: 'tests/*' }]
                                 ]
@@ -75,16 +73,13 @@ const settings = {
     concurrency: Infinity,
     port       : 9876,
     singleRun  : true,
-
-    // Prevent disconnect in Firefox/Safari
-    // https://support.saucelabs.com/hc/en-us/articles/225104707-Karma-Tests-Disconnect-Particularly-When-Running-Tests-on-Safari
-    browserDisconnectTimeout  : 1000*10, // default 2000
-    browserDisconnectTolerance: 1,       // default 0
-    browserNoActivityTimeout  : 1000*30, // default 10000
-    captureTimeout            : 1000*60, // default 60000
+    // browserDisconnectTimeout  : 1000*10, // default 2000
+    // browserDisconnectTolerance: 1,       // default 0
+    // browserNoActivityTimeout  : 1000*30, // default 10000
+    // captureTimeout            : 1000*60, // default 60000
     client: {
         mocha: {
-            timeout: 1000*20 // default 2000
+            // timeout: 1000*20 // default 2000
         }
     }
 };
@@ -98,69 +93,65 @@ module.exports = function(config) {
     // Remote test
     if (isRemote) {
         // Browsers
-        // https://wiki.saucelabs.com/display/DOCS/Platform+Configurator#/
+        // https://www.browserstack.com/automate/capabilities
         settings.customLaunchers = {
             sl_chrome: {
-                base       : 'SauceLabs',
-                browserName: 'Chrome',
-                platform   : 'Windows 10',
-                version    : '26.0'
+                base           : 'BrowserStack',
+                browser        : 'Chrome',
+                browser_version: '37.0',
+                os             : 'Windows',
+                os_version     : '10'
             },
             sl_edge: {
-                base       : 'SauceLabs',
-                browserName: 'MicrosoftEdge',
-                platform   : 'Windows 10',
-                version    : '13.10586'
+                base           : 'BrowserStack',
+                browser        : 'Edge',
+                browser_version: '18.0',
+                os             : 'Windows',
+                os_version     : '10'
             },
             sl_firefox: {
-                base       : 'SauceLabs',
-                browserName: 'Firefox',
-                platform   : 'Windows 10',
-                version    : '30'
+                base           : 'BrowserStack',
+                browser        : 'Firefox',
+                browser_version: '32',
+                os             : 'Windows',
+                os_version     : '10'
             },
             sl_ie_11: {
-                base       : 'SauceLabs',
-                browserName: 'internet explorer',
-                platform   : 'Windows 7',
-                version    : '11.0'
-            },
-            sl_ie_10: {
-                base       : 'SauceLabs',
-                browserName: 'internet explorer',
-                platform   : 'Windows 7',
-                version    : '10.0'
+                base           : 'BrowserStack',
+                browser        : 'IE',
+                browser_version: '11.0',
+                os             : 'Windows',
+                os_version     : '10'
             },
             sl_ie_9: {
-                base       : 'SauceLabs',
-                browserName: 'Internet Explorer',
-                platform   : 'Windows 7',
-                version    : '9.0'
+                base           : 'BrowserStack',
+                browser        : 'IE',
+                browser_version: '9.0',
+                os             : 'Windows',
+                os_version     : '7'
             },
             sl_safari: {
-                base       : 'SauceLabs',
-                browserName: 'Safari',
-                platform   : 'OS X 10.10',
-                version    : '8.0'
+                base           : 'BrowserStack',
+                browser        : 'Safari',
+                os             : 'OS X',
+                os_version     : 'Sierra'
             }
         };
         settings.browsers = Object.keys(settings.customLaunchers);
 
-        // SauceLabs
-        settings.reporters.push('saucelabs');
-        settings.sauceLabs = {
-            username         : saucelabs.username || process.env.SAUCE_USERNAME,
-            accessKey        : saucelabs.accessKey || process.env.SAUCE_ACCESS_KEY,
-            testName         : `${pkg.name} (karma)`,
-            recordScreenshots: false,
-            recordVideo      : false
+        // BrowserStack
+        settings.reporters.push('BrowserStack');
+        settings.browserStack = {
+            username : process.env.BROWSERSTACK_USERNAME,
+            accessKey: process.env.BROWSERSTACK_ACCESS_KEY,
+            build    : [
+                `${process.env.GITHUB_RUN_ID ? 'GitHub' : 'Local'}:${gitInfo.branch} -`,
+                gitInfo.isClean ? gitInfo.commitMsg : 'Uncommitted changes',
+                `@ ${new Date().toLocaleString('en-US', { month: 'numeric', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric', timeZoneName: 'short', hour12: true })}`
+            ].join(' '),
+            project  : pkg.name,
+            video    : false
         };
-
-        // Travis CI
-        if ('TRAVIS' in process.env) {
-            // Use custom hostname to prevent Safari disconnects
-            // https://support.saucelabs.com/hc/en-us/articles/115010079868-Issues-with-Safari-and-Karma-Test-Runner
-            settings.hostname = 'travis.dev';
-        }
     }
     // Local
     else {
