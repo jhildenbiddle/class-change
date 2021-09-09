@@ -98,7 +98,7 @@ module.exports = function(config) {
             sl_chrome: {
                 base           : 'BrowserStack',
                 browser        : 'Chrome',
-                browser_version: '37.0',
+                browser_version: '48.0',
                 os             : 'Windows',
                 os_version     : '10'
             },
@@ -122,13 +122,6 @@ module.exports = function(config) {
                 browser_version: '11.0',
                 os             : 'Windows',
                 os_version     : '10'
-            },
-            sl_ie_9: {
-                base           : 'BrowserStack',
-                browser        : 'IE',
-                browser_version: '9.0',
-                os             : 'Windows',
-                os_version     : '7'
             },
             sl_safari: {
                 base           : 'BrowserStack',
