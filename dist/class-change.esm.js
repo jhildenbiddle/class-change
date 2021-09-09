@@ -2,7 +2,7 @@
  * class-change
  * v1.1.6
  * https://jhildenbiddle.github.io/class-change
- * (c) 2016-2019 John Hildenbiddle <http://hildenbiddle.com>
+ * (c) 2016-2021 John Hildenbiddle <http://hildenbiddle.com>
  * MIT license
  */
 function classNamesToArray(classNames) {
@@ -10,9 +10,9 @@ function classNamesToArray(classNames) {
         classNames = classNames.trim().replace(/\s+/g, " ").split(" ");
     }
     if (Array.isArray(classNames)) {
-        classNames = classNames.map(function(name) {
+        classNames = classNames.map((function(name) {
             return name && name.length ? name.trim() : null;
-        });
+        }));
         classNames = classNames.filter(Boolean);
     }
     return classNames;
@@ -27,9 +27,9 @@ function elementsToArray(elements) {
         elements = [ elements ];
     }
     if (Array.isArray(elements)) {
-        return elements.filter(function(value, index, self) {
+        return elements.filter((function(value, index, self) {
             return self.indexOf(value) === index;
-        });
+        }));
     } else {
         return [];
     }
@@ -69,65 +69,65 @@ function matchesSelector(elm, selector) {
 
 function addClass(target, classNames) {
     var elms = elementsToArray(target);
-    elms.forEach(function(elm, i) {
+    elms.forEach((function(elm, i) {
         var classArray = classNamesToArray(classNames instanceof Function ? classNames(elm, i) : classNames);
         if (classArray && classArray.length) {
             var elmClassArray = elm.className.length ? elm.className.split(" ") : [];
-            var newClassArray = classArray.filter(function(className) {
+            var newClassArray = classArray.filter((function(className) {
                 return elmClassArray.indexOf(className) === -1;
-            });
+            }));
             var finalClassArray = elmClassArray.concat(newClassArray);
             elm.className = finalClassArray.join(" ");
         }
-    });
+    }));
     return elms.length === 1 ? elms[0] : elms;
 }
 
 function removeClass(target, classNames) {
     var elms = elementsToArray(target);
-    elms.forEach(function(elm, i) {
+    elms.forEach((function(elm, i) {
         var classArray = classNamesToArray(classNames instanceof Function ? classNames(elm, i) : classNames);
         if (elm.className.trim().length && classArray && classArray.length) {
             var elmClassArray = elm.className.split(" ");
-            var finalClassArray = elmClassArray.filter(function(className) {
+            var finalClassArray = elmClassArray.filter((function(className) {
                 return classArray.indexOf(className) === -1;
-            });
+            }));
             if (finalClassArray.length) {
                 elm.className = finalClassArray.join(" ");
             } else {
                 elm.removeAttribute("class");
             }
         }
-    });
+    }));
     return elms.length === 1 ? elms[0] : elms;
 }
 
-var classChange = {
+var classChange$2 = {
     add: addClass,
     remove: removeClass
 };
 
 function toggleClass(target, classNames, forceTrueFalse) {
     if (forceTrueFalse === true) {
-        return classChange.add(target, classNames);
+        return classChange$2.add(target, classNames);
     } else if (forceTrueFalse === false) {
-        return classChange.remove(target, classNames);
+        return classChange$2.remove(target, classNames);
     } else {
         var elms = elementsToArray(target);
-        elms.forEach(function(elm, i) {
+        elms.forEach((function(elm, i) {
             var classArray = classNamesToArray(classNames instanceof Function ? classNames(elm, i) : classNames);
             if (classArray && classArray.length) {
                 var elmClassArray = elm.className.length ? elm.className.split(" ") : [];
-                var keepClassArray = elmClassArray.filter(function(className) {
+                var keepClassArray = elmClassArray.filter((function(className) {
                     return classArray.indexOf(className) === -1;
-                });
-                var newClassArray = classArray.filter(function(className) {
+                }));
+                var newClassArray = classArray.filter((function(className) {
                     return elmClassArray.indexOf(className) === -1;
-                });
+                }));
                 var finalClassArray = keepClassArray.concat(newClassArray);
                 elm.className = finalClassArray.join(" ");
             }
-        });
+        }));
         return elms.length === 1 ? elms[0] : elms;
     }
 }
@@ -145,14 +145,14 @@ function addRemoveAttrListener() {
     listenerTarget = typeof listenerTarget === "boolean" ? document : listenerTarget;
     var elms = elementsToArray(listenerTarget);
     var method = listenerTarget === false || addTrueRemoveFalse === false ? "removeEventListener" : "addEventListener";
-    elms.forEach(function(elm) {
+    elms.forEach((function(elm) {
         elm[method]("click", handleAttrEvent);
-    });
+    }));
     return {
         remove: function remove() {
-            elms.forEach(function(elm) {
+            elms.forEach((function(elm) {
                 elm.removeEventListener("click", handleAttrEvent);
-            });
+            }));
         }
     };
 }
@@ -161,11 +161,11 @@ function handleAttrEvent(evt) {
     var elms = [ evt.target ].concat(getParents(evt.target));
     var matchSelector = "[data-class-add],[data-class-remove],[data-class-toggle]";
     var methods = [ "add", "remove", "toggle" ];
-    elms.forEach(function(elm) {
+    elms.forEach((function(elm) {
         var hasAttr = matchesSelector(elm, matchSelector);
         if (hasAttr) {
             var changeTasks = {};
-            methods.forEach(function(method) {
+            methods.forEach((function(method) {
                 var classNames = elm.getAttribute("data-class-".concat(method));
                 if (classNames && classNames.length) {
                     var closestAttr = elm.getAttribute("data-class-".concat(method, "-closest")) || elm.getAttribute("data-class-closest");
@@ -183,13 +183,13 @@ function handleAttrEvent(evt) {
                     }
                     if (siblingsAttr) {
                         var siblingElms = elementsToArray(elm.parentNode.children);
-                        siblingElms.forEach(function(siblingElm) {
+                        siblingElms.forEach((function(siblingElm) {
                             var isSibling = siblingElm !== elm;
                             var isMatch = matchesSelector(siblingElm, siblingsAttr);
                             if (isSibling && isMatch) {
                                 changeElms.push(siblingElm);
                             }
-                        });
+                        }));
                     }
                     if (targetAttr) {
                         var _elms3 = elementsToArray(document.querySelectorAll(targetAttr));
@@ -200,17 +200,18 @@ function handleAttrEvent(evt) {
                         classNames: classNames
                     };
                 }
-            });
-            methods.forEach(function(method) {
+            }));
+            methods.forEach((function(method) {
                 if (changeTasks[method]) {
                     classChange$1[method](changeTasks[method].target, changeTasks[method].classNames);
                 }
-            });
+            }));
         }
-    });
+    }));
 }
 
 function _typeof(obj) {
+    "@babel/helpers - typeof";
     if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
         _typeof = function(obj) {
             return typeof obj;
@@ -223,7 +224,7 @@ function _typeof(obj) {
     return _typeof(obj);
 }
 
-var classChange$2 = {
+var classChange = {
     add: addClass,
     remove: removeClass,
     toggle: toggleClass
@@ -242,14 +243,14 @@ function addChangeListener(options) {
     function triggerChangeEvent(evt) {
         handleChangeEvent(evt, settings);
     }
-    settings.target.forEach(function(target) {
+    settings.target.forEach((function(target) {
         target.addEventListener(settings.event, triggerChangeEvent);
-    });
+    }));
     return {
         remove: function remove() {
-            settings.target.forEach(function(target) {
+            settings.target.forEach((function(target) {
                 target.removeEventListener(settings.event, triggerChangeEvent);
-            });
+            }));
         }
     };
 }
@@ -262,32 +263,32 @@ function handleChangeEvent(evt, settings) {
         matchedElm = evt.target;
     } else if (typeof matchElms === "string") {
         var isMatch = matchesSelector(evt.target, matchElms);
-        matchedElm = isMatch ? evt.target : getParents(evt.target).filter(function(elm) {
+        matchedElm = isMatch ? evt.target : getParents(evt.target).filter((function(elm) {
             return matchesSelector(elm, matchElms);
-        })[0] || null;
+        }))[0] || null;
         matchElms = elementsToArray(matchElms);
     } else if (_typeof(matchElms) === "object") {
         var _isMatch = evt.target === matchElms;
         matchElms = elementsToArray(matchElms);
-        matchedElm = _isMatch ? evt.target : matchElms[matchElms.indexOf(evt.target)] || getParents(evt.target).filter(function(elm) {
+        matchedElm = _isMatch ? evt.target : matchElms[matchElms.indexOf(evt.target)] || getParents(evt.target).filter((function(elm) {
             return matchElms.indexOf(elm) !== -1;
-        })[0] || null;
+        }))[0] || null;
     }
     if (matchedElm) {
         var matchedElmIndex = matchElms.indexOf(matchedElm);
         var changeElms = settings.change instanceof Function ? settings.change(evt, matchedElm, matchedElmIndex) : settings.change;
         changeElms = changeElms === true ? [ evt.target ] : elementsToArray(changeElms);
-        [ "toggle", "remove", "add" ].forEach(function(changeType) {
+        [ "toggle", "remove", "add" ].forEach((function(changeType) {
             if (settings[changeType] instanceof Function) {
-                changeElms.forEach(function(changeElm, changeElmIndex) {
+                changeElms.forEach((function(changeElm, changeElmIndex) {
                     var classNames = settings[changeType](evt, matchedElm, matchedElmIndex, changeElm, changeElmIndex);
-                    classChange$2[changeType](changeElm, classNames);
-                });
+                    classChange[changeType](changeElm, classNames);
+                }));
             } else {
                 var classNames = settings[changeType];
-                classChange$2[changeType](changeElms, classNames);
+                classChange[changeType](changeElms, classNames);
             }
-        });
+        }));
     }
 }
 
@@ -299,5 +300,5 @@ var index = {
     toggle: toggleClass
 };
 
-export default index;
+export { index as default };
 //# sourceMappingURL=class-change.esm.js.map
