@@ -13,6 +13,15 @@
             margin: 0;
         }
     </style>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HP85HRDG94"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-HP85HRDG94');
+    </script>
 </head>
 
 <body>
@@ -40,8 +49,7 @@
             // PLUGINS
             // -----------------------------------------------------------------
             executeScript: true,
-            ga         : 'UA-100100910-2',
-            search     : {
+            search: {
                 depth      : 3,
                 noData     : 'No results!',
                 placeholder: 'Search...'
@@ -53,7 +61,6 @@
     <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/external-script.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/ga.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 </body>
