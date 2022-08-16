@@ -1,6 +1,6 @@
 {
   "name": "class-change",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "A versatile Element.classList alternative for manipulating CSS class names, triggering change events using HTML data attributes, and creating class-related event listeners using a simple, declarative API.",
   "author": "John Hildenbiddle <http://hildenbiddle.com>",
   "license": "MIT",

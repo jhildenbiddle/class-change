@@ -1,5 +1,12 @@
 # Change Log
 
+## 1.1.7
+
+*2022-08-16*
+
+- Update dependencies
+- Update README.md
+
 ## 1.1.6
 
 *2019-07-19*
