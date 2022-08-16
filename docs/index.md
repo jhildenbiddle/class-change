@@ -487,7 +487,7 @@ Class changes can be triggered using `data-class` attributes on HTML elements. T
 
 !> In order to use `data-class` attributes to trigger class changes, you must create an event listener using the [`attr()`](#attrs) method below.
 
-| Attributes                   | Value         | Description                                        |
+| Attribute                    | Value         | Description                                        |
 | ---------------------------- | ------------- | -------------------------------------------------- |
 | `data‑class‑add`             | Class name(s) | Class name(s) to add (space-separated list)        |
 | `data‑class‑add‑closest`     | CSS Selector  | Closest ancestor element to add classes to         |
