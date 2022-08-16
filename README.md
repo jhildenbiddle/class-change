@@ -9,7 +9,8 @@
 
 A versatile [Element.classList](https://developer.mozilla.org/en/DOM/element.classList) alternative for manipulating CSS class names, triggering class change events using HTML data attributes, and creating class-related event listeners using a simple, declarative API.
 
-- [Documentation](https://jhildenbiddle.github.io/class-change) - Documentation and usage examples
+- [Documentation](https://jhildenbiddle.github.io/class-change)
+- [Codepen Demo](https://codepen.io/jhildenbiddle/pen/wvmYVML)
 
 ## Why?
 
