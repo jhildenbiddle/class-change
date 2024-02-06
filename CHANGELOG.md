@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.1.8
+
+*2024-02-06*
+
+- Fix GitHub workflow badge
+
 ## 1.1.7
 
 *2022-08-16*
