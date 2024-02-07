@@ -1,7 +1,7 @@
 # class-change.js
 
 [![NPM](https://img.shields.io/npm/v/class-change.svg?style=flat-square)](https://www.npmjs.com/package/class-change)
-[![GitHub Workflow Status (master)](https://img.shields.io/github/workflow/status/jhildenbiddle/class-change/Build%20&%20Test/master?label=checks&style=flat-square)](https://github.com/jhildenbiddle/get-css-data/actions?query=branch%3Amaster+)
+[![GitHub Workflow Status (master)](https://img.shields.io/github/actions/workflow/status/jhildenbiddle/class-change/test.yml?branch=master&label=checks&style=flat-square)](https://github.com/jhildenbiddle/class-change/actions?query=branch%3Amaster+)
 [![Codacy code quality](https://img.shields.io/codacy/grade/d656ba140a6e488ab9db2f33183f760e/master?style=flat-square)](https://app.codacy.com/gh/jhildenbiddle/class-change/dashboard?branch=master)
 [![Codacy branch coverage](https://img.shields.io/codacy/coverage/d656ba140a6e488ab9db2f33183f760e/master?style=flat-square)](https://app.codacy.com/gh/jhildenbiddle/class-change/dashboard?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](https://github.com/jhildenbiddle/class-change/blob/master/LICENSE)
